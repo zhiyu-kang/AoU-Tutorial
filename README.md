@@ -53,31 +53,27 @@ research workspace
 #### 4. Storage Options
 All of Us Researcher Workbench offers multiple storage layers. Choose the right one for your use case:
 
-| Storage Option       | Location                                               | Persistence                            | Shared?                                 | Access Methods                                             | Notes                                                                                                               |
+| Storage Option       | Location                                               | Persistence                            | Shared?                                 | [Access Methods](https://support.researchallofus.org/hc/en-us/articles/22465609082260-Accessing-Files-in-the-Workspace-Bucket-or-Persistent-Disk)                                             | Notes                                                                                                               |
 |----------------------|--------------------------------------------------------|----------------------------------------|-----------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
 | **Workspace Bucket** | Google Cloud Storage bucket attached to your workspace | Permanent: lives until workspace is deleted| Yes: auto-shared with collaborators | - Jupyter/RStudio file browser<br>- `gsutil ls $WORKSPACE_BUCKET`   | Ideal for long-term artifacts (scripts, summary tables, figures).     |
 | **Persistent Disk**  | VM’s attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - VM home directory (e.g., `/home/jupyter`)<br>- Python `.to_csv()`, `.to_pickle()` | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
-| **Standard Disk**    | Ephemeral disk in Standard VM environments             | Temporary: deleted on VM termination  | No: isolated to that VM               | - VM home directory<br>- Jupyter/RStudio file browser                      | Good for short-lived files; **must** copy results to workspace bucket to persist.                                    |
 | **Standard Disk**    | Ephemeral disk in Dataproc cluster environments        | Temporary: lives only with cluster       | No: isolated to that cluster          | - Dataproc notebook terminal<br>- HDFS or local shell commands              | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
+> **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
 ---
+ 
+#### 5. Planning Your Data Strategy
 
-#### 4. Planning Your Data Strategy  
-- **Understand Data Modalities:**  
-  - **EHR**: diagnoses, procedures, medications, labs  
-  - **Surveys**: demographics, lifestyle, social determinants, COVID-19 experiences  
-  - **Physical Measures**: blood pressure, heart rate, height, weight, waist circumference  
-  - **Genomics**: SNV/Indel calls, WGS reads, genotyping arrays  
-  - **Wearables**: activity, sleep metrics, out-of-clinic heart rate  
-- **Harmonization Framework:**  
-  - All data types are standardized using OMOP CDM and AoU vocabularies.  
-  - Reference the `docs/reference/` folder for OMOP mapping guides and codebook details.
-
----
-
-#### 5. Tools & Resources  
-- **Data Browser**: preview aggregate counts and distributions across domains  
-- **Data Dictionaries & Codebooks**:  
-  - Provide comprehensive field definitions—indispensable for selecting the right variables  
-  - Located in `docs/supplementary/codebooks/`  
+| Data Modality        | Key Contents                                                             | Standard Vocabulary & OMOP Domain                                | Explore Link                                                                                                                                          |
+|----------------------|---------------------------------------------------------------------------|------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **EHR**              | conditions, drug exposures, labs and measurements, and procedures         | Conditions → Source Concpets (e.g. ICD-9,ICD-10) → Standard Concepts (e.g. SNOMED) | [Introduction to All of Us Electronic Health Record (EHR) Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/30125602539284-Introduction-to-All-of-Us-Electronic-Health-Record-EHR-Collection-and-Data-Transformation-Methods)  |
+| **Surveys**    | Self-reported demographics, lifestyle, social determinants, COVID-19      | OMOP Observation → PPI (All of Us)        | [Introduction to All of Us Survey Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/6085114880148-Introduction-to-All-of-Us-Survey-Collection-and-Data-Transformation-Methods))   |
+| **Physical Measures**| Blood pressure, heart rate, height, weight, waist circumference           | Measurement → LOINC                                              | [Introduction to All of Us Physical Measurement Data Collection and Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/29888188023060-Introduction-to-All-of-Us-Physical-Measurement-Data-Collection-and-Transformation-Methods) |
+| **Genomics**         | SNV/Indel calls, WGS reads, genotyping arrays                            | OMOP variant tables                                              | [Genomics](https://support.researchallofus.org/hc/en-us/articles/29475228181908-How-the-All-of-Us-Genomic-data-are-organized)|
+| **Wearables**        | Activity metrics, sleep patterns, out-of-clinic heart rate               | OMOP Observation → Fitbit/PPI concepts                           | [Fitbit Data](https://support.researchallofus.org/hc/en-us/articles/20281023493908-Resources-for-Using-Fitbit-Data)   |
+- For more detaisl:
+  - [Data Browser](https://support.researchallofus.org/hc/en-us/articles/6088666015636-The-All-of-Us-Data-Browser-Tutorial): preview aggregate counts and distributions across domains  
+  - [Data Dictionaries](https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries) & [Codebooks](https://support.researchallofus.org/hc/en-us/articles/360051991531--All-of-Us-Survey-Codebooks):  
+    - The CDR Data Dictionaries offer a complete, versioned listing of all metadata for every table and field in the All of Us CDR
+    - The Survey Codebooks compile all fielded survey instruments (Baseline, Follow-Up, PPI) into a tabbed document. Each tab corresponds to one survey, listing every question, response code, value labels, and tier-specific privacy rules
 
 ---
