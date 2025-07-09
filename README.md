@@ -47,20 +47,18 @@ research workspace
 - **Shared Workspace:**  Users are allowed to [share](https://support.researchallofus.org/hc/en-us/articles/30328097309332-Managing-Workspaces?utm_source=chatgpt.com) their workspace to other registered collaborators
   - including following assets: **Cohorts**, **Concept Sets**, **Datasets**, **Analysis Code**
 - **Featured Workspaces:** The platform provide some example workspaces could be used as templets. More information can be found in [featured workspace](https://support.researchallofus.org/hc/en-us/articles/360059633052-Featured-Workspaces). Moreover, users are allowed to [publish](https://support.researchallofus.org/hc/en-us/articles/24058730663828-Publishing-your-workspace-as-a-Community-Workspace-in-the-Researcher-Workbench?utm_source=chatgpt.com) their workspace to as a Community Workspace.
-- **Personal Compute:**  
-  - All analyses run in **isolated, ephemeral VMs** on the Researcher Workbench. Each user’s Jupyter, RStudio, or SAS session boots its own cloud-compute instance—ensuring resource control and securit
-  - Compute instances are launched upon “Start” and destroyed on “Stop,” preventing other users’ workloads from affecting your environment
-  - Only you and collaborators you explicitly share with can start or access your VM, authenticated via Login.gov and controlled by workspace sharing settings
-- **Long‐term Storage:**  
-  - Each workspace includes a **persistent “workspace bucket”** (Google Cloud Storage) that survives VM restarts and is deleted only when the workspace is deleted. :contentReference
-  - When you share a workspace, its bucket is shared automatically, giving collaborators read/write access to all bucket files. 
-  - Access bucket files via:
-    - **Notebook Snippets**: Use the built-in “Cloud Storage snippets” menu in Jupyter/RStudio to list and manipulate files
-    - **gsutil**: Run `gsutil ls $WORKSPACE_BUCKET` in a terminal cell to view contents
-  - **Best Practice**: Store only summary tables, aggregated results, and visualizations in the bucket. Do **not** move raw participant-level data out of the CDR
 
+---
 
+#### 4. Storage Options
+All of Us Researcher Workbench offers multiple storage layers. Choose the right one for your use case:
 
+| Storage Option       | Location                                               | Persistence                            | Shared?                                 | Access Methods                                             | Notes                                                                                                               |
+|----------------------|--------------------------------------------------------|----------------------------------------|-----------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| **Workspace Bucket** | Google Cloud Storage bucket attached to your workspace | Permanent: lives until workspace is deleted| Yes: auto-shared with collaborators | - Jupyter/RStudio file browser<br>- `gsutil ls $WORKSPACE_BUCKET`   | Ideal for long-term artifacts (scripts, summary tables, figures).     |
+| **Persistent Disk**  | VM’s attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - VM home directory (e.g., `/home/jupyter`)<br>- Python `.to_csv()`, `.to_pickle()` | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
+| **Standard Disk**    | Ephemeral disk in Standard VM environments             | Temporary: deleted on VM termination  | No: isolated to that VM               | - VM home directory<br>- Jupyter/RStudio file browser                      | Good for short-lived files; **must** copy results to workspace bucket to persist.                                    |
+| **Standard Disk**    | Ephemeral disk in Dataproc cluster environments        | Temporary: lives only with cluster       | No: isolated to that cluster          | - Dataproc notebook terminal<br>- HDFS or local shell commands              | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
 ---
 
 #### 4. Planning Your Data Strategy  
