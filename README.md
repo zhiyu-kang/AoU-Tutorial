@@ -27,9 +27,10 @@ research workspace
 - **What is a Workspace?**  
   A cloud-based environment in AoU Researcher Workbench where you create, save, and run all analyses.  
 - **Key Actions on Creation:**  
-  1. **Name & Describe** your project.  
-  2. **Select CDR Version** — the curated data repository (CDR) holds all current AoU research data and is updated periodically.  
-  3. **Instantiate** a new workspace tied to that CDR snapshot.  
+  1. **Name & Discribe** your workspace, more details can be found in [Writing Your Workspace Description](https://support.researchallofus.org/hc/en-us/articles/30351591538580-Writing-Your-Workspace-Description)
+  2. **Select Data Access Tier:** [Registered Tier](https://docs.google.com/document/d/158NTVpz1qJeA3_DTKAvR30XBEYhXPNqhnVQNRgK1FQM/edit?tab=t.0#heading=h.e7ppu6uf0bea) or [Control Tier](https://docs.google.com/document/d/1F3hxRgTgGc4nfQMNrsAuKwigozMKKFnV-7gU83LfI8g/edit?tab=t.0#heading=h.e7ppu6uf0bea) 
+  3. **Select CDR Version** — the curated data repository (CDR) holds all current AoU research data and is updated periodically (The latest version is [CDRv8](https://support.researchallofus.org/hc/en-us/articles/30294451486356-Curated-Data-Repository-CDR-version-8-Release-Notes))
+  4. **Select Billing Account** — for more details on initial credits and billing setup, see “[Paying for Your Research](https://support.researchallofus.org/hc/en-us/sections/360007074491-Paying-for-Your-Research)”
 
 ---
 
@@ -38,7 +39,7 @@ research workspace
   - Ensures your results reference a fixed data snapshot.  
   - Enables others (and future you) to rerun analyses on the identical dataset.  
 - **Updating Your Data:**  
-  - When a new CDR is released, simply **duplicate** your existing workspace to inherit updated research data while preserving your original code and outputs.  
+  - When a new CDR is released, simply [duplicate](https://support.researchallofus.org/hc/en-us/articles/30328097309332-Managing-Workspaces) your existing workspace to inherit updated research data while preserving your original code and outputs.  
 
 ---
 
