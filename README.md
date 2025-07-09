@@ -32,7 +32,7 @@ research workspace
   3. **Select CDR Version** — the curated data repository (CDR) holds all current AoU research data and is updated periodically (The latest version is [CDRv8](https://support.researchallofus.org/hc/en-us/articles/30294451486356-Curated-Data-Repository-CDR-version-8-Release-Notes))
   4. **Select Billing Account** — for more details on initial credits and billing setup, see “[Paying for Your Research](https://support.researchallofus.org/hc/en-us/sections/360007074491-Paying-for-Your-Research)”
 
----
+
 
 #### 2. Versioning & Duplication  
 - **Why CDR Versioning Matters:**  
@@ -41,14 +41,14 @@ research workspace
 - **Updating Your Data:**  
   - When a new CDR is released, simply [duplicate](https://support.researchallofus.org/hc/en-us/articles/30328097309332-Managing-Workspaces) your existing workspace to inherit updated research data while preserving your original code and outputs.  
 
----
+
 
 #### 3. Sharing & Collaboration  
 - **Shared Workspace:**  Users are allowed to [share](https://support.researchallofus.org/hc/en-us/articles/30328097309332-Managing-Workspaces?utm_source=chatgpt.com) their workspace to other registered collaborators
   - including following assets: **Cohorts**, **Concept Sets**, **Datasets**, **Analysis Code**
 - **Featured Workspaces:** The platform provide some example workspaces could be used as templets. More information can be found in [featured workspace](https://support.researchallofus.org/hc/en-us/articles/360059633052-Featured-Workspaces). Moreover, users are allowed to [publish](https://support.researchallofus.org/hc/en-us/articles/24058730663828-Publishing-your-workspace-as-a-Community-Workspace-in-the-Researcher-Workbench?utm_source=chatgpt.com) their workspace to as a Community Workspace.
 
----
+
 
 #### 4. Storage Options
 All of Us Researcher Workbench offers multiple storage layers. Choose the right one for your use case:
@@ -59,7 +59,6 @@ All of Us Researcher Workbench offers multiple storage layers. Choose the right 
 | **Persistent Disk**  | VM’s attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - VM home directory (e.g., `/home/jupyter`)<br>- Python `.to_csv()`, `.to_pickle()` | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
 | **Standard Disk**    | Ephemeral disk in Dataproc cluster environments        | Temporary: lives only with cluster       | No: isolated to that cluster          | - Dataproc notebook terminal<br>- HDFS or local shell commands              | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
 > **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
----
  
 #### 5. Planning Your Data Strategy
 
@@ -77,3 +76,34 @@ All of Us Researcher Workbench offers multiple storage layers. Choose the right 
     - The Survey Codebooks compile all fielded survey instruments (Baseline, Follow-Up, PPI) into a tabbed document. Each tab corresponds to one survey, listing every question, response code, value labels, and tier-specific privacy rules
 
 ---
+
+### Step 2: Cohort Identification
+
+#### 1. What Is a Cohort?  
+A **cohort** is the set of participants you’ll analyze, defined by inclusion and exclusion criteria that reflect your study question.
+
+#### 2. Inclusion & Exclusion Logic  
+- **Inclusion Groups** (`Group 1`, `Group 2`, …) use **OR** within each group (any criterion) and **AND** across groups (all groups must be met).  
+- **Exclusion Group** (`Group X`) removes anyone who meets *any* exclusion criterion, even if they satisfy inclusion.
+
+#### 3. Building Your Cohort  
+1. Open your workspace and click **Cohorts** → **+ New Cohort**.  
+2. Click **Add Inclusion Criteria**: search by keyword (e.g. “diabetes”) or enter concept codes (ICD-9/10, SNOMED, CPT).  
+3. (Optionally) Click **Add Another Group** to layer additional inclusion logic.  
+4. Click **Add Exclusion Criteria** to remove participants (e.g. comorbidities).  
+5. Preview the cohort size; adjust criteria or operators until you reach your target population.  
+6. Click **Save** and give your cohort a clear, versioned name (e.g. `RA_Cases_v1`).
+
+#### 4. Example: RA Case–Control  
+- **RA Cases**: answered “Yes” to the RA follow-up survey question.  
+- **Controls**: never saw a provider for RA AND no RA-related EHR codes AND no major comorbidities (CVD, diabetes, hypertension).  
+- **Result**: 3,879 cases and 144,419 controls initially; refined by age (25–105 in 10-year bins) to 14,943 controls.
+
+#### 5. Advanced Tips  
+- **Cohort Review**: use the review tab to inspect sample records before finalizing.  
+- **Temporal Filters**: add date ranges (e.g. “first RA code in last 5 years”).  
+- **Generate SQL**: click **View SQL** to export or customize the underlying OMOP query.  
+- **Versioning**: duplicate your cohort definition to experiment without overwriting.
+
+---
+
