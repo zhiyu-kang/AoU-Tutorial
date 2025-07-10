@@ -60,15 +60,15 @@ All of Us Researcher Workbench offers multiple storage layers. Choose the right 
 | **Standard Disk**    | Ephemeral disk in Dataproc cluster environments        | Temporary: lives only with cluster       | No: isolated to that cluster          | - Dataproc notebook terminal<br>- HDFS or local shell commands              | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
 > **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
  
-#### 5. Planning Your Data Strategy
+#### 5. Data Type
 
-| Data Modality        | Key Contents                                                             | Standard Vocabulary & OMOP Domain                                | Explore Link                                                                                                                                          |
+| Data Modality        | Key Contents                                                             | Standard Vocabulary & [OMOP Domain](https://support.researchallofus.org/hc/en-us/articles/360039585391-Understanding-OMOP-Basics)                                | Explore Link                                                                                                                                          |
 |----------------------|---------------------------------------------------------------------------|------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **EHR**              | conditions, drug exposures, labs and measurements, and procedures         | Conditions → Source Concpets (e.g. ICD-9,ICD-10) → Standard Concepts (e.g. SNOMED) | [Introduction to All of Us Electronic Health Record (EHR) Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/30125602539284-Introduction-to-All-of-Us-Electronic-Health-Record-EHR-Collection-and-Data-Transformation-Methods)  |
-| **Surveys**    | Self-reported demographics, lifestyle, social determinants, COVID-19      | OMOP Observation → PPI (All of Us)        | [Introduction to All of Us Survey Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/6085114880148-Introduction-to-All-of-Us-Survey-Collection-and-Data-Transformation-Methods))   |
-| **Physical Measures**| Blood pressure, heart rate, height, weight, waist circumference           | Measurement → LOINC                                              | [Introduction to All of Us Physical Measurement Data Collection and Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/29888188023060-Introduction-to-All-of-Us-Physical-Measurement-Data-Collection-and-Transformation-Methods) |
-| **Genomics**         | SNV/Indel calls, WGS reads, genotyping arrays                            | OMOP variant tables                                              | [Genomics](https://support.researchallofus.org/hc/en-us/articles/29475228181908-How-the-All-of-Us-Genomic-data-are-organized)|
-| **Wearables**        | Activity metrics, sleep patterns, out-of-clinic heart rate               | OMOP Observation → Fitbit/PPI concepts                           | [Fitbit Data](https://support.researchallofus.org/hc/en-us/articles/20281023493908-Resources-for-Using-Fitbit-Data)   |
+| **EHR**              | conditions, drug exposures, labs and measurements, and procedures         | Domine(e.g. Conditions) → Source Vocabulary (e.g. ICD-9,ICD-10) → OMOP Standard Vocabulary (e.g. SNOMED) | [Introduction to All of Us Electronic Health Record (EHR) Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/30125602539284-Introduction-to-All-of-Us-Electronic-Health-Record-EHR-Collection-and-Data-Transformation-Methods)  |
+| **Surveys**    | Self-reported demographics, lifestyle, social determinants, COVID-19      | Survey questions and answers → PPI (All of Us) →  OMOP Standard Vocabulary (SNOMED, LOINC, PPI)      | [Introduction to All of Us Survey Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/6085114880148-Introduction-to-All-of-Us-Survey-Collection-and-Data-Transformation-Methods))   |
+| **Physical Measures**| Blood pressure, heart rate, height, weight, waist circumference           | Program physical measurements → PPI (All of Us) →  OMOP Standard Vocabulary (SNOMED, LOINC, PPI)  | [Introduction to All of Us Physical Measurement Data Collection and Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/29888188023060-Introduction-to-All-of-Us-Physical-Measurement-Data-Collection-and-Transformation-Methods) |
+| **Genomics**         | SNV/Indel calls, WGS reads, genotyping arrays                            |                                               | [Genomics](https://support.researchallofus.org/hc/en-us/articles/29475228181908-How-the-All-of-Us-Genomic-data-are-organized)|
+| **Wearables**        | Activity metrics, sleep patterns, out-of-clinic heart rate               |                                               | [Fitbit Data](https://support.researchallofus.org/hc/en-us/articles/20281023493908-Resources-for-Using-Fitbit-Data)   |
 - For more detaisl:
   - [Data Browser](https://support.researchallofus.org/hc/en-us/articles/6088666015636-The-All-of-Us-Data-Browser-Tutorial): preview aggregate counts and distributions across domains  
   - [Data Dictionaries](https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries) & [Codebooks](https://support.researchallofus.org/hc/en-us/articles/360051991531--All-of-Us-Survey-Codebooks):  
@@ -94,19 +94,19 @@ A **cohort** is the set of participants you’ll analyze, defined by inclusion a
 4. (Optionally) Click **Add Exclusion Criteria** to remove participants (e.g. comorbidities).  
 5. Preview the cohort size; adjust criteria or operators until you reach your target population.  
 6. Click **Save** and give your cohort a clear, versioned name (e.g. `RA_case_by_survey`).
+> See [Selecting Participants Using the Cohort Builder](https://support.researchallofus.org/hc/en-us/articles/360039585591-Selecting-Participants-Using-the-Cohort-Builder) for more detailed instructions
 
 #### 4. Example: RA Case–Control  
-- **RA Cases**: answered “Yes” to the RA follow-up survey question.  
-- **Controls**: never saw a provider for RA AND no RA-related EHR codes AND no major comorbidities (CVD, diabetes, hypertension).  
+- **RA Cases**: answered “Yes” to the RA follow-up survey question ("*Are you still seeing a doctor or healthcare provider for rheumatoid arthritis (RA)?*").  
+- **RA Controls**: never saw a provider for RA AND no RA-related EHR codes AND no major comorbidities (CVD, diabetes, hypertension).  
 - **Result**: 3,879 cases and 144,419 controls initially; refined by age (25–105 in 10-year bins) to 14,943 controls.
 
-**The following picture illustrates how we constructed the Cohort for RA Control group**. ![Chort1](Fig/Cohort1.png)
+**The following picture shows RA Control Cohort example**. ![Chort1](Fig/Cohort1.png)
 
 #### 5. Advanced Tips  
-- **Cohort Review**: use the review tab to inspect sample records before finalizing.  
-- **Temporal Filters**: add date ranges (e.g. “first RA code in last 5 years”).  
-- **Generate SQL**: click **View SQL** to export or customize the underlying OMOP query.  
-- **Versioning**: duplicate your cohort definition to experiment without overwriting.
+- **[Cohort Review](https://support.researchallofus.org/hc/en-us/articles/360039585651-Reviewing-Participants-with-the-Cohort-Review)**: use the review tab to inspect sample records before finalizing. 
+- **[Temporal Filter](https://support.researchallofus.org/hc/en-us/articles/19012423801364-Using-the-Temporal-Feature-within-the-Cohort-Builder)s**: add date ranges (e.g. “first RA code in last 5 years”).  
+- **[Generate SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL)**: click **View SQL** to export or customize the underlying OMOP query.  
 
 ---
 
