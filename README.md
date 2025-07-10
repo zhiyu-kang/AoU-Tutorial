@@ -86,18 +86,21 @@ A **cohort** is the set of participants you’ll analyze, defined by inclusion a
 - **Inclusion Groups** (`Group 1`, `Group 2`, …) use **OR** within each group (any criterion) and **AND** across groups (all groups must be met).  
 - **Exclusion Group** (`Group X`) removes anyone who meets *any* exclusion criterion, even if they satisfy inclusion.
 
+
 #### 3. Building Your Cohort  
 1. Open your workspace and click **Cohorts** → **+ New Cohort**.  
 2. Click **Add Inclusion Criteria**: search by keyword (e.g. “diabetes”) or enter concept codes (ICD-9/10, SNOMED, CPT).  
 3. (Optionally) Click **Add Another Group** to layer additional inclusion logic.  
-4. Click **Add Exclusion Criteria** to remove participants (e.g. comorbidities).  
+4. (Optionally) Click **Add Exclusion Criteria** to remove participants (e.g. comorbidities).  
 5. Preview the cohort size; adjust criteria or operators until you reach your target population.  
-6. Click **Save** and give your cohort a clear, versioned name (e.g. `RA_Cases_v1`).
+6. Click **Save** and give your cohort a clear, versioned name (e.g. `RA_case_by_survey`).
 
 #### 4. Example: RA Case–Control  
 - **RA Cases**: answered “Yes” to the RA follow-up survey question.  
 - **Controls**: never saw a provider for RA AND no RA-related EHR codes AND no major comorbidities (CVD, diabetes, hypertension).  
 - **Result**: 3,879 cases and 144,419 controls initially; refined by age (25–105 in 10-year bins) to 14,943 controls.
+
+**The following picture illustrates how we constructed the Cohort for RA Control group**. ![Chort1](Fig/Cohort1.png)
 
 #### 5. Advanced Tips  
 - **Cohort Review**: use the review tab to inspect sample records before finalizing.  
