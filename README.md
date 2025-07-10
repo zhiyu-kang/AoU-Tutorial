@@ -86,7 +86,8 @@ A **cohort** is the set of participants you’ll analyze, defined by inclusion a
 
 #### 3. Building Your Cohort  
 1. Open your workspace and click **Cohorts** block.  
-![Cohort2](Fig/Cohorts2.png)
+<img src="Fig/Cohorts2.png" width="200" height="200" />
+
 2. Click **Add Inclusion Criteria**: search by keyword (e.g. “diabetes”) or enter concept codes (ICD-9/10, SNOMED, CPT).  
 3. (Optionally) Click **Add Another Group** to layer additional inclusion logic.  
 4. (Optionally) Click **Add Exclusion Criteria** to remove participants (e.g. comorbidities).  
@@ -99,7 +100,8 @@ A **cohort** is the set of participants you’ll analyze, defined by inclusion a
 - **RA Controls**: never saw a provider for RA AND no RA-related EHR codes AND no major comorbidities (CVD, diabetes, hypertension).  
 - **Result**: 3,879 cases and 144,419 controls initially; refined by age (25–105 in 10-year bins) to 14,943 controls.
 
-**The following picture shows RA Control Cohort example**. ![Cohort1](Fig/Cohort1.png)
+**The following picture shows RA Control Cohort example**.  
+<img src="Fig/Cohort1.png" width="400" height="400" />
 
 #### 5. Advanced Tips  
 - **[Cohort Review](https://support.researchallofus.org/hc/en-us/articles/360039585651-Reviewing-Participants-with-the-Cohort-Review)**: use the review tab to inspect sample records before finalizing. 
@@ -114,10 +116,16 @@ A **concept** in All of Us is a standardized medical term or code (e.g., SNOMED,
 
 #### 2. Building Your Concept Sets
 1. Open your workspace and click **Datasets** block to launch the Dataset Builder.
-![Dataset](Fig/Dataset1.png)
-2. In the **Select Concept Sets** pane, enter keywords, concept names, or codes to search across all domains and vocabularies.
-3. Toggle **Show source concepts** to include non-standard codes (ICD, CPT, etc.) alongside standard concepts.
-4. Click each concept to add it to your set; group related concepts (e.g., all RA diagnostic codes) into one set for clarity.
+<img src="Fig/Dataset1.png" width="200" height="200" />
+
+2. Click the button to the right of the **Select Concept Sets** pane.
+<img src="Fig/Concept1.png" width="200" height="200" />
+
+3. Enter keywords, concept names, or codes to search across all domains and vocabularies.
+4. Toggle **Show source concepts** to include non-standard codes (ICD, CPT, etc.) alongside standard concepts.
+5. Click each concept to add it to your set; group related concepts (e.g., all RA diagnostic codes) into one set for clarity.
+
+> See [Building a Dataset with the Dataset Builder](https://support.researchallofus.org/hc/en-us/articles/4556645124244-Building-a-Dataset-with-the-Dataset-Builder) for more detailed instructions
 
 #### 3. Applying Concept Sets in Analyses
 Once created, your concept sets appear as reusable assets:
@@ -142,5 +150,80 @@ WHERE
 ```
 Replace `measurement` with the appropriate table (e.g., `condition_occurrence`, `drug_exposure`) and `12345` with your actual `concept_set_id`.
 > See [Exploring Concepts with OMOP and SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL) for more examples
+
+#### 4. Example: RA Case–Control
+- **RA_survey**: Survey question related to the diagnosis of RA
+  - About how old were you when you were first told you had rheumatoid arthritis (RA)?
+  - Are you currently prescribed medications and/or receiving treatment for rheumatoid arthritis (RA)?
+  - Are you still seeing a doctor or health care provider for rheumatoid arthritis (RA)?
+  - Including yourself, who in your family has had rheumatoid arthritis (RA)? Select all that apply.
+
+<img src="Fig/RA_survey.png" width="800" height="800" />
+
+- **RA_condition**: RA case identified by condition code (ICD9/ICD10)
+  - Other specified rheumatoid arthritis
+  - Rheumatoid arthritis
+  - Rheumatoid arthritis without rheumatoid factor
+  - Rheumatoid arthritis, unspecified
+
+<img src="Fig/RA_condition.png" width="800" height="800" />
+
+---
+
+### Step 4: Dataset Creation
+
+#### 1. What Is a Dataset?
+A dataset in All of Us is a structured table of participant-level records built from one or more concept sets and your predefined cohort. It lets you package exactly the variables you need—across EHR, survey, genomics or wearable domains—and export them for downstream analysis in Jupyter or RStudio.
+
+#### 2. Building a Dataset
+1. **Open the Datasets card** in your workspace and click **Create Dataset**
+2. **Name & Describe** your dataset (e.g. `RA_Demographics_EHR`)
+3. **Select Cohort**: choose the cohort asset you defined in Step 2
+4. **Select Concept Sets**: add one or more concept sets (e.g. `RA_condition`, `Demographics`, `Laboratory`)
+5. **Choose Columns**: for each concept set, pick the fields you want—e.g.
+   • **Condition** → `condition_start_datetime`, `condition_concept_id`
+   • **Measurement** → `measurement_date`
+   • **Person** → `birth_datetime`
+6. **Preview & Save**: inspect the first 100 rows to confirm accuracy, then click **Save** to register the dataset asset
+
+*Alternatively, you can choose to skip using the Cohort Builder and the Dataset Builder and go straight to Jupyter Notebook to query the All of Us data if you prefer. We do not recommend this for researchers with limited SQL knowledge.*
+
+#### 3. Post-Creation Processing & Storage
+
+• **Preview & Validate**:
+```python
+df.head()
+df.info()
+```
+
+• **Derive New Variables** :
+```
+# Compute follow-up time (C)
+ra_df['age_at_survey_event'] = ra_df.apply(
+    lambda row: ((row['survey_datetime'] - row['date_of_birth']).days // 365) if pd.notna(row['survey_datetime']) else None, 
+    axis=1
+)
+
+# Compute age at condition start time (X)
+ra_df['age_at_condition_event'] = ra_df.apply(
+    lambda row: ((row['condition_start_datetime'] - row['date_of_birth']).days // 365) if pd.notna(row['condition_start_datetime']) else None, 
+    axis=1
+)
+
+# Compute last ehr follow-up time
+ra_df['age_at_last_ehr'] = ra_df.apply(
+    lambda row: ((row['condition_start_datetime_ehr'] - row['date_of_birth']).days // 365) if pd.notna(row['condition_start_datetime_ehr']) else None, 
+    axis=1
+)
+```
+
+• **Harmonize Codes**: map source vocabularies (ICD, LOINC, RxNorm) to higher-level groupings (phenocodes, category labels).
+
+• **Save to Disk vs. Bucket** (see Supplementary "Storage snippets"):
+  • **Persistent Disk** for intermediate work (`/home/jupyter/data/...`)
+  • **Workspace Bucket** (`gs://$WORKSPACE_BUCKET/...`) for shareable, long-term storage
+
+#### 4. Running Example (RA Case Study)
+
 
 
