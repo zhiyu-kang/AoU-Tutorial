@@ -3,20 +3,17 @@ A tutorial for using All of Us platform for biomedical research.
 
 ## Description and flowchart
 
-1. **Workspace Setup:** covering best practices for organizing and managing AoU
-research workspace
+1. **Workspace Setup**
 
-2. **Cohort Identification:** outlining strategies for selecting study populations based on inclusion and exclusion criteria
+2. **Cohort Identification**
 
-3. **Clinical Variable Curation:** detailing methods for extracting and harmonizing EHR data
+3. **Concept Identification**
 
-4. **Questionnarie and SDoH Integration:** explaining techniques for incorporating survey responses into analyses
+4. **Dataset creation**
 
-5. **Genomic Data Utilization:** providing guidance on deriving genetic traits from whole genome sequencing (WGS) data
+5. **Data analysis (genomics environment vs standard environment)**
 
-6. **Wearable Data Processing:** summarizing methods for processing FitBit and other wearable device data
-
-7. **Risk Modeling:** leveraging combined outcome information from EHR and questionnaire diagnosis information
+6. **Result storage and export**
 
 
 ## Method
@@ -88,7 +85,8 @@ A **cohort** is the set of participants you’ll analyze, defined by inclusion a
 
 
 #### 3. Building Your Cohort  
-1. Open your workspace and click **Cohorts** → **+ New Cohort**.  
+1. Open your workspace and click **Cohorts** block.  
+![Cohort2](Fig/Cohorts2.png)
 2. Click **Add Inclusion Criteria**: search by keyword (e.g. “diabetes”) or enter concept codes (ICD-9/10, SNOMED, CPT).  
 3. (Optionally) Click **Add Another Group** to layer additional inclusion logic.  
 4. (Optionally) Click **Add Exclusion Criteria** to remove participants (e.g. comorbidities).  
@@ -101,12 +99,48 @@ A **cohort** is the set of participants you’ll analyze, defined by inclusion a
 - **RA Controls**: never saw a provider for RA AND no RA-related EHR codes AND no major comorbidities (CVD, diabetes, hypertension).  
 - **Result**: 3,879 cases and 144,419 controls initially; refined by age (25–105 in 10-year bins) to 14,943 controls.
 
-**The following picture shows RA Control Cohort example**. ![Chort1](Fig/Cohort1.png)
+**The following picture shows RA Control Cohort example**. ![Cohort1](Fig/Cohort1.png)
 
 #### 5. Advanced Tips  
 - **[Cohort Review](https://support.researchallofus.org/hc/en-us/articles/360039585651-Reviewing-Participants-with-the-Cohort-Review)**: use the review tab to inspect sample records before finalizing. 
-- **[Temporal Filter](https://support.researchallofus.org/hc/en-us/articles/19012423801364-Using-the-Temporal-Feature-within-the-Cohort-Builder)s**: add date ranges (e.g. “first RA code in last 5 years”).  
-- **[Generate SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL)**: click **View SQL** to export or customize the underlying OMOP query.  
+- **[Temporal Filter](https://support.researchallofus.org/hc/en-us/articles/19012423801364-Using-the-Temporal-Feature-within-the-Cohort-Builder)**: add date ranges (e.g. “first RA code in last 5 years”).    
 
 ---
+
+### Step 3: Concept Identification
+
+#### 1. What Is a Concept Set?
+A **concept** in All of Us is a standardized medical term or code (e.g., SNOMED, ICD-10, LOINC) used to represent clinical events, measurements, or survey items. You group these into **concept sets** to specify exactly which data elements you want to retrieve for your analyses. Concept identification ensures that you’re pulling the correct, standardized items across diverse vocabularies, and lets you reuse and version your definitions for transparency and reproducibility.
+
+#### 2. Building Your Concept Sets
+1. Open your workspace and click **Datasets** block to launch the Dataset Builder.
+![Dataset](Fig/Dataset1.png)
+2. In the **Select Concept Sets** pane, enter keywords, concept names, or codes to search across all domains and vocabularies.
+3. Toggle **Show source concepts** to include non-standard codes (ICD, CPT, etc.) alongside standard concepts.
+4. Click each concept to add it to your set; group related concepts (e.g., all RA diagnostic codes) into one set for clarity.
+
+#### 3. Applying Concept Sets in Analyses
+Once created, your concept sets appear as reusable assets:
+- **In Cohort Builder**, reference concept sets directly when defining inclusion or exclusion criteria.
+- **In Notebooks or SQL**, retrieve the `concept_set_id` and join the `concept_set_item` table with the appropriate data table to pull participant-level data.
+
+##### Example SQL Snippet
+```sql
+-- Retrieve all measurements for your concept set
+SELECT
+  m.person_id,
+  m.measurement_date,
+  m.value_as_number
+FROM
+  `{{WORKSPACE_CDR}}.measurement` AS m
+JOIN
+  `{{WORKSPACE_CDR}}.concept_set_item` AS csi
+ON
+  m.measurement_concept_id = csi.concept_id
+WHERE
+  csi.concept_set_id = 12345;
+```
+Replace `measurement` with the appropriate table (e.g., `condition_occurrence`, `drug_exposure`) and `12345` with your actual `concept_set_id`.
+> See [Exploring Concepts with OMOP and SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL) for more examples
+
 
