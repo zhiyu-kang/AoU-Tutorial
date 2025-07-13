@@ -176,54 +176,25 @@ Replace `measurement` with the appropriate table (e.g., `condition_occurrence`, 
 A dataset in All of Us is a structured table of participant-level records built from one or more concept sets and your predefined cohort. It lets you package exactly the variables you need—across EHR, survey, genomics or wearable domains—and export them for downstream analysis in Jupyter or RStudio.
 
 #### 2. Building a Dataset
-1. **Open the Datasets card** in your workspace and click **Create Dataset**
-2. **Name & Describe** your dataset (e.g. `RA_Demographics_EHR`)
-3. **Select Cohort**: choose the cohort asset you defined in Step 2
-4. **Select Concept Sets**: add one or more concept sets (e.g. `RA_condition`, `Demographics`, `Laboratory`)
-5. **Choose Columns**: for each concept set, pick the fields you want—e.g.
-   • **Condition** → `condition_start_datetime`, `condition_concept_id`
-   • **Measurement** → `measurement_date`
-   • **Person** → `birth_datetime`
-6. **Preview & Save**: inspect the first 100 rows to confirm accuracy, then click **Save** to register the dataset asset
+1. Open the **Datasets Builder** in your workspace
+2. In the **Select Cohorts** panel, choose the cohort you defined in Step 2
+3. In the **Select Concept Sets (Rows)** panel, add one or more of your saved concept sets
+4. In the **Select Values (Columns)** panel, check values you want
+5. Click **View Preview Table** to see the first 100 rows of your dataset
+6. Click **CREATE DATASET** button at the bottom, and enter a **Name** and **Description** for your dataset
+7. After the Dataset is created, Click **Analyze** to open the **Export Dataset** dialog, where you can choose R, Python, or SAS export and either send code directly into a new/existing notebook or copy it for use in your preferred IDE
+> See [Building a Dataset with the Dataset Builder](https://support.researchallofus.org/hc/en-us/articles/4556645124244-Building-a-Dataset-with-the-Dataset-Builder) for more detailed instructions
 
-*Alternatively, you can choose to skip using the Cohort Builder and the Dataset Builder and go straight to Jupyter Notebook to query the All of Us data if you prefer. We do not recommend this for researchers with limited SQL knowledge.*
+> If you’re comfortable with SQL, you can bypass the visual builders and write your own queries directly in a notebook, though the Dataset Builder is recommended for most users (e.g. [Retrieve EHR Record](Code/Retrieve_ehr.py), [Retrieve Survey Record](Code/Retrieve_survey.py))
 
-#### 3. Post-Creation Processing & Storage
+#### 3. Example: RA Case-Control
+| Dataset Name               | Group      | Cohort              | Concept Sets  |
+|----------------------------|-----------:|--------------------:|--------------:|
+| **RA_survey_condition**    |  Case      |RA_case_by_survey    | Demographics, RA_condition, RA_survey |
+| **RA_control_no_common**   |  Control   |RA_control_no_common | Demographics, RA_survey    |
+> See [00_AoU_generated_code](data_preparation/00_AoU_generated_code.ipynb) for AoU auto-generated notebook export code
 
-• **Preview & Validate**:
-```python
-df.head()
-df.info()
-```
-
-• **Derive New Variables** :
-```
-# Compute follow-up time (C)
-ra_df['age_at_survey_event'] = ra_df.apply(
-    lambda row: ((row['survey_datetime'] - row['date_of_birth']).days // 365) if pd.notna(row['survey_datetime']) else None, 
-    axis=1
-)
-
-# Compute age at condition start time (X)
-ra_df['age_at_condition_event'] = ra_df.apply(
-    lambda row: ((row['condition_start_datetime'] - row['date_of_birth']).days // 365) if pd.notna(row['condition_start_datetime']) else None, 
-    axis=1
-)
-
-# Compute last ehr follow-up time
-ra_df['age_at_last_ehr'] = ra_df.apply(
-    lambda row: ((row['condition_start_datetime_ehr'] - row['date_of_birth']).days // 365) if pd.notna(row['condition_start_datetime_ehr']) else None, 
-    axis=1
-)
-```
-
-• **Harmonize Codes**: map source vocabularies (ICD, LOINC, RxNorm) to higher-level groupings (phenocodes, category labels).
-
-• **Save to Disk vs. Bucket** (see Supplementary "Storage snippets"):
-  • **Persistent Disk** for intermediate work (`/home/jupyter/data/...`)
-  • **Workspace Bucket** (`gs://$WORKSPACE_BUCKET/...`) for shareable, long-term storage
-
-#### 4. Running Example (RA Case Study)
+---
 
 
 
