@@ -194,6 +194,36 @@ A dataset in All of Us is a structured table of participant-level records built 
 | **RA_control_no_common**   |  Control   |RA_control_no_common | Demographics, RA_survey    |
 > See [00_AoU_generated_code](data_preparation/00_AoU_generated_code.ipynb) for AoU auto-generated notebook export code
 
+#### 4.(optional) Genomic Data
+
+- **Prerequisite:**
+  * **Use only for cohorts < 5,000 participants.** 
+
+- **Extraction Steps**
+  1.  **Dataset Builder**:
+      * Select your cohort.
+      * Check prepackaged concept sets for WGS data.
+      * Choose `VCF files`.
+  2.  Click **CREATE DATASET**, name it, and save.
+  3.  Click **ANALYZE**, then **EXTRACT & CONTINUE**.
+
+
+- **Key Warnings**
+  * **Cost**: ~$0.02 per sample.
+  * **Time**: Can take 5+ hours. Plan accordingly.
+  * **No Refunds**: Credits are not automatically returned for failed or canceled jobs.
+
+
+- **After Extraction**
+  * You will be notified when the background job is complete.
+  * Export the dataset to a **Python** Jupyter Notebook to access the analysis tools.
+
+- **For large Cohort**:
+  - In the case study, the RA_control_no_common dataset is divided into **four subsets** to satisfy the prerequiste of cohort size.
+
+
+
+
 ---
 
 
