@@ -46,18 +46,7 @@ A tutorial for using All of Us platform for biomedical research.
 - **Featured Workspaces:** The platform provide some example workspaces could be used as templets. More information can be found in [featured workspace](https://support.researchallofus.org/hc/en-us/articles/360059633052-Featured-Workspaces). Moreover, users are allowed to [publish](https://support.researchallofus.org/hc/en-us/articles/24058730663828-Publishing-your-workspace-as-a-Community-Workspace-in-the-Researcher-Workbench?utm_source=chatgpt.com) their workspace to as a Community Workspace.
 
 
-
-#### 4. Storage Options
-All of Us Researcher Workbench offers multiple storage layers. Choose the right one for your use case:
-
-| Storage Option       | Location                                               | Persistence                            | Shared?                                 | [Access Methods](https://support.researchallofus.org/hc/en-us/articles/22465609082260-Accessing-Files-in-the-Workspace-Bucket-or-Persistent-Disk)                                             | Notes                                                                                                               |
-|----------------------|--------------------------------------------------------|----------------------------------------|-----------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| **Workspace Bucket** | Google Cloud Storage bucket attached to your workspace | Permanent: lives until workspace is deleted| Yes: auto-shared with collaborators | - Jupyter/RStudio file browser<br>- `gsutil ls $WORKSPACE_BUCKET`   | Ideal for long-term artifacts (scripts, summary tables, figures).     |
-| **Persistent Disk**  | VM’s attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - VM home directory (e.g., `/home/jupyter`)<br>- Python `.to_csv()`, `.to_pickle()` | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
-| **Standard Disk**    | Ephemeral disk in Dataproc cluster environments        | Temporary: lives only with cluster       | No: isolated to that cluster          | - Dataproc notebook terminal<br>- HDFS or local shell commands              | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
-> **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
- 
-#### 5. Data Type
+#### 4. Data Type
 
 | Data Modality        | Key Contents                                                             | Standard Vocabulary & [OMOP Domain](https://support.researchallofus.org/hc/en-us/articles/360039585391-Understanding-OMOP-Basics)                                | Explore Link                                                                                                                                          |
 |----------------------|---------------------------------------------------------------------------|------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -197,34 +186,68 @@ A dataset in All of Us is a structured table of participant-level records built 
 #### 4.(optional) Genomic Data
 
 - **Prerequisite:**
-  * **Use only for cohorts < 5,000 participants.** 
+  * **Use only for cohorts < 5000 participants.** 
 
 - **Extraction Steps**
   1.  **Dataset Builder**:
       * Select your cohort.
       * Check prepackaged concept sets for WGS data.
       * Choose `VCF files`.
+  <img src="Fig/genomic.png" width="800" height="800" />
+  
   2.  Click **CREATE DATASET**, name it, and save.
   3.  Click **ANALYZE**, then **EXTRACT & CONTINUE**.
-
-
-- **Key Warnings**
-  * **Cost**: ~$0.02 per sample.
-  * **Time**: Can take 5+ hours. Plan accordingly.
-  * **No Refunds**: Credits are not automatically returned for failed or canceled jobs.
-
+> See [using the Genomic Extraction tool](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for more instructions
 
 - **After Extraction**
   * You will be notified when the background job is complete.
   * Export the dataset to a **Python** Jupyter Notebook to access the analysis tools.
 
-- **For large Cohort**:
+- **For large Cohort( > 5000)**:
   - In the case study, the RA_control_no_common dataset is divided into **four subsets** to satisfy the prerequiste of cohort size.
+  - Sample Extraction code:
+    - [RA case](data_preparation/02_RA_case_genomics_extraction.ipynb)
+    - [RA control](data_preparation/03_RA_control_genomics_extraction.ipynb)
+---
 
+### Step 5: Data Analysis (Standard vs. Genomics Environment)
 
+Before diving into analysis, choose the right notebook environment for your needs. All of Us supports two flavors—**Standard** for EHR/survey/wearable work and **Genomics** for large-scale variant pipelines. The sections below outline when to use each, how to launch, and where to find example notebooks.
+
+#### 1. Standard vs. Genomics Environments  
+- **General Analysis Environment**:     
+  - Ideal for cohort summaries, EHR/survey charts, and preliminary data exploration :contentReference[oaicite:0]{index=0}.  
+- **Hail Genomics Analysis**:  
+  - Pre-installed libraries for Hail, Spark, and bioinformatics tools.  
+  - Optimized for VCF imports, variant filtering, PCA, GWAS, and ML on WGS data
+
+#### 2. Launching Your Notebook  
+1. In Workbench, select **Notebooks → New notebook**.  
+2. Choose **Standard** or **Genomics** as the environment.    
+
+#### 3. Accessing Your Dataset  
+- After Step 4, your cohort export appears under **Data → Your Datasets**.  
+- Click **Open in Notebook** to mount files and environment variables automatically :contentReference[oaicite:3]{index=3}.  
+
+#### 4. Example Analysis Workflows  
+| Environment  | Focus                                  | Sample Notebooks                                               |
+|-------------:|----------------------------------------|----------------------------------------------------------------|
+| **Standard** | Cohort tables, EHR/survey summaries    | [RA_standard](data_preparation/00_AoU_generated_code.ipynb)            |
+| **Genomics** | Variant QC, PCA, regression on SNPs   | [RA_case_genomics](data_preparation/02_RA_case_genomics_extraction.ipynb)            |
 
 
 ---
 
+### Step 6: Result storage and export
+#### Storage Options
+All of Us Researcher Workbench offers multiple storage layers. Choose the right one for your use case:
+
+| Storage Option       | Location                                               | Persistence                            | Shared?                                 | [Access Methods](https://support.researchallofus.org/hc/en-us/articles/22465609082260-Accessing-Files-in-the-Workspace-Bucket-or-Persistent-Disk)                                             | Notes                                                                                                               |
+|----------------------|--------------------------------------------------------|----------------------------------------|-----------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| **Workspace Bucket** | Google Cloud Storage bucket attached to your workspace | Permanent: lives until workspace is deleted| Yes: auto-shared with collaborators | - Jupyter/RStudio file browser<br>- `gsutil ls $WORKSPACE_BUCKET`   | Ideal for long-term artifacts (scripts, summary tables, figures).     |
+| **Persistent Disk**  | VM’s attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - VM home directory (e.g., `/home/jupyter`)<br>- Python `.to_csv()`, `.to_pickle()` | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
+| **Standard Disk**    | Ephemeral disk in Dataproc cluster environments        | Temporary: lives only with cluster       | No: isolated to that cluster          | - Dataproc notebook terminal<br>- HDFS or local shell commands              | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
+> **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
+ 
 
 
