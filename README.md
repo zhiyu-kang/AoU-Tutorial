@@ -203,39 +203,51 @@ A dataset in All of Us is a structured table of participant-level records built 
   * You will be notified when the background job is complete.
   * Export the dataset to a **Python** Jupyter Notebook to access the analysis tools.
 
+- **Sample Extraction Code**:
+  - [02_RA_case_genomics_extraction.ipynb](data_preparation/02_RA_case_genomics_extraction.ipynb)
+
 - **For large Cohort( > 5000)**:
   - In the case study, the RA_control_no_common dataset is divided into **four subsets** to satisfy the prerequiste of cohort size.
-  - Sample Extraction code:
-    - [RA case](data_preparation/02_RA_case_genomics_extraction.ipynb)
-    - [RA control](data_preparation/03_RA_control_genomics_extraction.ipynb)
+  - Extraction code:
+    - [03_RA_control_genomics_extraction.ipynb](data_preparation/03_RA_control_genomics_extraction.ipynb)
+    - **Alternatively**, you can access genomic data directly in jupyter notebook, see [How to Work with All of Us Genomic Data (Hail - Plink)(v8)](https://workbench.researchallofus.org/workspaces/aou-rw-a5b0235e/howtoworkwithallofusgenomicdatahailplinkv8/data) and [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for instrctions
 ---
 
 ### Step 5: Data Analysis (Standard vs. Genomics Environment)
+All of Us provides several cloud environments for data analysis, including Jupyter, R, and SAS. It is recommended to first export data to a **Jupyter Notebook**, where you can prepare and process the data, then store it in a Google Cloud Storage(GCS) for downstream analysis in other cloud environments.
 
-Before diving into analysis, choose the right notebook environment for your needs. All of Us supports two flavors—**Standard** for EHR/survey/wearable work and **Genomics** for large-scale variant pipelines. The sections below outline when to use each, how to launch, and where to find example notebooks.
-
-#### 1. Standard vs. Genomics Environments  
+#### 1. Standard vs. Genomics Environments 
 - **General Analysis Environment**:     
-  - Ideal for cohort summaries, EHR/survey charts, and preliminary data exploration :contentReference[oaicite:0]{index=0}.  
-- **Hail Genomics Analysis**:  
-  - Pre-installed libraries for Hail, Spark, and bioinformatics tools.  
-  - Optimized for VCF imports, variant filtering, PCA, GWAS, and ML on WGS data
+  - Ideal for regular jobs, like phenotypic data exploration
+- **Hail Genomics Analysis**:
+  - Dataproc Cluster computing type is automatically created
+  - Pre-installed libraries for Hail, Spark, and bioinformatics tools  
+  - Optimized for analysis on WGS data
 
-#### 2. Launching Your Notebook  
-1. In Workbench, select **Notebooks → New notebook**.  
-2. Choose **Standard** or **Genomics** as the environment.    
+#### 2. Launching Your Notebook
+1. In Workbench, select **Jupyter Cloud Envirnoment** on the right handside of the screen.  
+2. Instead the **Recommend Envirnoments**, choose **General Analysis Environment** or **Hail Genomics Analysis**
+3. **Configure** CPU, RAM, disk, and the number of workers according to the requirements
+4. Click **Next** on the bottom of the panel
+> [Video instruction](https://support.researchallofus.org/hc/en-us/articles/32519872019220-Customizing-Jupyter-Notebook-Environments)
 
 #### 3. Accessing Your Dataset  
-- After Step 4, your cohort export appears under **Data → Your Datasets**.  
-- Click **Open in Notebook** to mount files and environment variables automatically :contentReference[oaicite:3]{index=3}.  
+1. After completing step 4, you can locate your dataset in the **Datasets** section as illustrated below:
+<img src="Fig/access_dataset.png" width="800" height="800" />
+2. Select the dataset you wish to analyze and export it to your chosen Jupyter notebook.
+3. (optional)  If you select the GWAS concept, you can find the path to the extracted VCF files by following [guidance](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool)
 
 #### 4. Example Analysis Workflows  
 | Environment  | Focus                                  | Sample Notebooks                                               |
 |-------------:|----------------------------------------|----------------------------------------------------------------|
-| **Standard** | Cohort tables, EHR/survey summaries    | [RA_standard](data_preparation/00_AoU_generated_code.ipynb)            |
+| **Standard** | Cohort tables, EHR/survey summaries    | [RA_phenotypic](data_preparation/00_AoU_generated_code.ipynb)            |
 | **Genomics** | Variant QC, PCA, regression on SNPs   | [RA_case_genomics](data_preparation/02_RA_case_genomics_extraction.ipynb)            |
 
-
+#### 5. Other Applications
+- RStudio: Full-featured R IDE for statistical modeling and graphics
+- SAS Studio: SAS language interface optimized for large dataset handling and advanced statistical analyses
+- Cromwell (WDL): Managed WDL workflows via Google Batch API, supporting complex bioinformatics pipelines
+> See [Using Workspaces, Cloud Environments, and Applications](https://support.researchallofus.org/hc/en-us/sections/6000139724820-Using-Workspaces-Cloud-Environments-and-Applications) for more details
 ---
 
 ### Step 6: Result storage and export
