@@ -48,13 +48,13 @@ A tutorial for using All of Us platform for biomedical research.
 
 #### 4. Data Type
 
-| Data Modality        | Key Contents                                                             | Standard Vocabulary & [OMOP Domain](https://support.researchallofus.org/hc/en-us/articles/360039585391-Understanding-OMOP-Basics)                                | Explore Link                                                                                                                                          |
+| Data Modality        | Key Contents                                                             | [Standard Vocabulary & OMOP Domain](https://support.researchallofus.org/hc/en-us/articles/360039585391-Understanding-OMOP-Basics)                                | Explore Link                                                                                                                                          |
 |----------------------|---------------------------------------------------------------------------|------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **EHR**              | conditions, drug exposures, labs and measurements, and procedures         | Domine(e.g. Conditions) → Source Vocabulary (e.g. ICD-9,ICD-10) → OMOP Standard Vocabulary (e.g. SNOMED) | [Introduction to All of Us Electronic Health Record (EHR) Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/30125602539284-Introduction-to-All-of-Us-Electronic-Health-Record-EHR-Collection-and-Data-Transformation-Methods)  |
 | **Surveys**    | Self-reported demographics, lifestyle, social determinants, COVID-19      | Survey questions and answers → PPI (All of Us) →  OMOP Standard Vocabulary (SNOMED, LOINC, PPI)      | [Introduction to All of Us Survey Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/6085114880148-Introduction-to-All-of-Us-Survey-Collection-and-Data-Transformation-Methods))   |
 | **Physical Measures**| Blood pressure, heart rate, height, weight, waist circumference           | Program physical measurements → PPI (All of Us) →  OMOP Standard Vocabulary (SNOMED, LOINC, PPI)  | [Introduction to All of Us Physical Measurement Data Collection and Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/29888188023060-Introduction-to-All-of-Us-Physical-Measurement-Data-Collection-and-Transformation-Methods) |
-| **Genomics**         | SNV/Indel calls, WGS reads, genotyping arrays                            |                                               | [Genomics](https://support.researchallofus.org/hc/en-us/articles/29475228181908-How-the-All-of-Us-Genomic-data-are-organized)|
-| **Wearables**        | Activity metrics, sleep patterns, out-of-clinic heart rate               |                                               | [Fitbit Data](https://support.researchallofus.org/hc/en-us/articles/20281023493908-Resources-for-Using-Fitbit-Data)   |
+| **Genomics**         | SNV/Indel calls, WGS reads, genotyping arrays                            |  Custom Genomics CDR tables (not in standard OMOP): VCF/MT/BGEN/PLINK files stored under Controlled Tier → see *How the All of Us genomic data are organized*                                             | [How the All of Us genomic data are organized](https://support.researchallofus.org/hc/en-us/articles/29475228181908-How-the-All-of-Us-Genomic-data-are-organized)|
+| **Wearables**        | Activity metrics, sleep patterns, out-of-clinic heart rate               |  Custom Wearables CDR tables (outside OMOP CDM): 7 specific tables (according to steps_intraday, heart_rate_minute_level, heart_rate_summary, activity_summary, sleep_level, sleep_daily_summary, device).                                              | [Resources for Using Fitbit Data](https://support.researchallofus.org/hc/en-us/articles/20281023493908-Resources-for-Using-Fitbit-Data)   |
 - For more detaisl:
   - [Data Browser](https://support.researchallofus.org/hc/en-us/articles/6088666015636-The-All-of-Us-Data-Browser-Tutorial): preview aggregate counts and distributions across domains  
   - [Data Dictionaries](https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries) & [Codebooks](https://support.researchallofus.org/hc/en-us/articles/360051991531--All-of-Us-Survey-Codebooks):  
@@ -120,25 +120,7 @@ A **concept** in All of Us is a standardized medical term or code (e.g., SNOMED,
 Once created, your concept sets appear as reusable assets:
 - **In Cohort Builder**, reference concept sets directly when defining inclusion or exclusion criteria.
 - **In Notebooks or SQL**, retrieve the `concept_set_id` and join the `concept_set_item` table with the appropriate data table to pull participant-level data.
-
-##### Example SQL Snippet
-```sql
--- Retrieve all measurements for your concept set
-SELECT
-  m.person_id,
-  m.measurement_date,
-  m.value_as_number
-FROM
-  `{{WORKSPACE_CDR}}.measurement` AS m
-JOIN
-  `{{WORKSPACE_CDR}}.concept_set_item` AS csi
-ON
-  m.measurement_concept_id = csi.concept_id
-WHERE
-  csi.concept_set_id = 12345;
-```
-Replace `measurement` with the appropriate table (e.g., `condition_occurrence`, `drug_exposure`) and `12345` with your actual `concept_set_id`.
-> See [Exploring Concepts with OMOP and SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL) for more examples
+> See [Exploring Concepts with OMOP and SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL) for examples
 
 #### 4. Example: RA Case–Control
 - **RA_survey**: Survey question related to the diagnosis of RA
