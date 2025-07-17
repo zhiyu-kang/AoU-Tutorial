@@ -171,7 +171,6 @@ A dataset in All of Us is a structured table of participant-level records built 
 4. In the **Select Values (Columns)** panel, check values you want
 5. Click **View Preview Table** to see the first 100 rows of your dataset
 6. Click **CREATE DATASET** button at the bottom, and enter a **Name** and **Description** for your dataset
-7. After the Dataset is created, Click **Analyze** to open the **Export Dataset** dialog, where you can choose R, Python, or SAS export and either send code directly into a new/existing notebook or copy it for use in your preferred IDE
 > See [Building a Dataset with the Dataset Builder](https://support.researchallofus.org/hc/en-us/articles/4556645124244-Building-a-Dataset-with-the-Dataset-Builder) for more detailed instructions
 
 > If you’re comfortable with SQL, you can bypass the visual builders and write your own queries directly in a notebook, though the Dataset Builder is recommended for most users (e.g. [Retrieve EHR Record](Code/Retrieve_ehr.py), [Retrieve Survey Record](Code/Retrieve_survey.py))
@@ -234,8 +233,10 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 #### 3. Accessing Your Dataset  
 1. After completing step 4, you can locate your dataset in the **Datasets** section as illustrated below:
 <img src="Fig/access_dataset.png" width="800" height="800" />
-2. Select the dataset you wish to analyze and export it to your chosen Jupyter notebook.
+
+2. Select the dataset you wish to analyze and click **Analyze** to open the **Export Dataset** dialog. Here, you can choose R, Python, or SAS export options and either send the code directly to a new or existing notebook, or copy it for use in your preferred IDE (*see [Exporting and analyzing your data in Workbench applications](https://support.researchallofus.org/hc/en-us/articles/360039585831-Exporting-and-analyzing-your-data-in-Workbench-applications) for detailed instructions*)
 3. (optional)  If you select the GWAS concept, you can find the path to the extracted VCF files by following [guidance](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool)
+
 
 #### 4. Example Analysis Workflows  
 | Environment  | Focus                                  | Sample Notebooks                                               |
@@ -247,7 +248,7 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 - RStudio: Full-featured R IDE for statistical modeling and graphics
 - SAS Studio: SAS language interface optimized for large dataset handling and advanced statistical analyses
 - Cromwell (WDL): Managed WDL workflows via Google Batch API, supporting complex bioinformatics pipelines
-> See [Using Workspaces, Cloud Environments, and Applications](https://support.researchallofus.org/hc/en-us/sections/6000139724820-Using-Workspaces-Cloud-Environments-and-Applications) for more details
+> See [Overview of applications in the Researcher Workbench](https://support.researchallofus.org/hc/en-us/articles/21793933965204-Overview-of-applications-in-the-Researcher-Workbench) for more details
 ---
 
 ### Step 6: Result storage and export
