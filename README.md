@@ -243,6 +243,14 @@ All of Us Researcher Workbench offers multiple storage layers. Choose the right 
 | **Persistent Disk**  | VM’s attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - VM home directory (e.g., `/home/jupyter`)<br>- Python `.to_csv()`, `.to_pickle()` | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
 | **Standard Disk**    | Ephemeral disk in Dataproc cluster environments        | Temporary: lives only with cluster       | No: isolated to that cluster          | - Dataproc notebook terminal<br>- HDFS or local shell commands              | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
 > **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
+
+#### Downloading Files to Your Local Machine
+Once your file lives on PD or has been copied to the workspace bucket:
+1. In Jupyter: Click Files → Open, select the file, then Download
+2. In RStudio/SAS:
+   - Use the Files pane’s download icon, or
+   - Run *gsutil cp* from the terminal
+
  
 
 
