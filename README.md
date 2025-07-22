@@ -194,7 +194,10 @@ A dataset in All of Us is a structured table of participant-level records built 
     - In the case study, the RA_control_no_common dataset is divided into **four subsets** to satisfy the prerequiste of cohort size.
     - Extraction code:
       - [03_RA_control_genomics_extraction.ipynb](data_preparation/03_RA_control_genomics_extraction.ipynb)
-- **Alternatively**, you can access genomic data directly in jupyter notebook, see [How to Work with All of Us Genomic Data (Hail - Plink)(v8)](https://workbench.researchallofus.org/workspaces/aou-rw-a5b0235e/howtoworkwithallofusgenomicdatahailplinkv8/data) and [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for instrctions
+- **Alternatively**, you can access genomic data directly in a notebook
+  - **Sample Code** for preparing genomic data used for RA case study:  
+
+see [How to Work with All of Us Genomic Data (Hail - Plink)(v8)](https://workbench.researchallofus.org/workspaces/aou-rw-a5b0235e/howtoworkwithallofusgenomicdatahailplinkv8/data) and [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for instrctions
 ---
 
 ### Step 5: Data Analysis (Standard vs. Genomics Environment)
