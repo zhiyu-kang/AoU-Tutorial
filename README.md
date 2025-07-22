@@ -1,7 +1,7 @@
 # AoU-Tutorial
 A tutorial for using All of Us platform for biomedical research.
 
-## Description and flowchart
+## Overview
 
 1. **Workspace Setup**
 
@@ -16,7 +16,7 @@ A tutorial for using All of Us platform for biomedical research.
 6. **Result storage and export**
 
 
-## Method
+## Workflow
 
 ### Step 1: Workspace Setup
 
@@ -25,7 +25,7 @@ A tutorial for using All of Us platform for biomedical research.
   A cloud-based environment in AoU Researcher Workbench where you create, save, and run all analyses.  
 - **Key Actions on Creation:**  
   1. **Name & Discribe** your workspace, more details can be found in [Writing Your Workspace Description](https://support.researchallofus.org/hc/en-us/articles/30351591538580-Writing-Your-Workspace-Description)
-  2. **Select Data Access Tier:** [Registered Tier](https://docs.google.com/document/d/158NTVpz1qJeA3_DTKAvR30XBEYhXPNqhnVQNRgK1FQM/edit?tab=t.0#heading=h.e7ppu6uf0bea) or [Control Tier](https://docs.google.com/document/d/1F3hxRgTgGc4nfQMNrsAuKwigozMKKFnV-7gU83LfI8g/edit?tab=t.0#heading=h.e7ppu6uf0bea) 
+  2. **Select Data Access Tier** — [Registered Tier](https://docs.google.com/document/d/158NTVpz1qJeA3_DTKAvR30XBEYhXPNqhnVQNRgK1FQM/edit?tab=t.0#heading=h.e7ppu6uf0bea) or [Control Tier](https://docs.google.com/document/d/1F3hxRgTgGc4nfQMNrsAuKwigozMKKFnV-7gU83LfI8g/edit?tab=t.0#heading=h.e7ppu6uf0bea) 
   3. **Select CDR Version** — the curated data repository (CDR) holds all current AoU research data and is updated periodically (The latest version is [CDRv8](https://support.researchallofus.org/hc/en-us/articles/30294451486356-Curated-Data-Repository-CDR-version-8-Release-Notes))
   4. **Select Billing Account** — for more details on initial credits and billing setup, see “[Paying for Your Research](https://support.researchallofus.org/hc/en-us/sections/360007074491-Paying-for-Your-Research)”
 
@@ -54,8 +54,8 @@ A tutorial for using All of Us platform for biomedical research.
 | **Surveys**    | Self-reported demographics, lifestyle, social determinants, COVID-19      | Survey questions and answers → PPI (All of Us) →  OMOP Standard Vocabulary (SNOMED, LOINC, PPI)      | [Introduction to All of Us Survey Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/6085114880148-Introduction-to-All-of-Us-Survey-Collection-and-Data-Transformation-Methods))   |
 | **Physical Measures**| Blood pressure, heart rate, height, weight, waist circumference           | Program physical measurements → PPI (All of Us) →  OMOP Standard Vocabulary (SNOMED, LOINC, PPI)  | [Introduction to All of Us Physical Measurement Data Collection and Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/29888188023060-Introduction-to-All-of-Us-Physical-Measurement-Data-Collection-and-Transformation-Methods) |
 | **Genomics**         | SNV/Indel calls, WGS reads, genotyping arrays                            |  Custom Genomics CDR tables (not in standard OMOP): VCF/MT/BGEN/PLINK files stored under Controlled Tier → see *How the All of Us genomic data are organized*                                             | [How the All of Us genomic data are organized](https://support.researchallofus.org/hc/en-us/articles/29475228181908-How-the-All-of-Us-Genomic-data-are-organized)|
-| **Wearables**        | Activity metrics, sleep patterns, out-of-clinic heart rate               |  Custom Wearables CDR tables (outside OMOP CDM): 7 specific tables (according to steps_intraday, heart_rate_minute_level, heart_rate_summary, activity_summary, sleep_level, sleep_daily_summary, device).                                              | [Resources for Using Fitbit Data](https://support.researchallofus.org/hc/en-us/articles/20281023493908-Resources-for-Using-Fitbit-Data)   |
-- For more detaisl:
+| **Wearables**        | Activity metrics, sleep patterns, out-of-clinic heart rate               |  Custom Wearables CDR tables (not in standard OMOP): 7 specific tables (according to steps_intraday, heart_rate_minute_level, heart_rate_summary, activity_summary, sleep_level, sleep_daily_summary, device).                                              | [Resources for Using Fitbit Data](https://support.researchallofus.org/hc/en-us/articles/20281023493908-Resources-for-Using-Fitbit-Data)   |
+- For more details:
   - [Data Browser](https://support.researchallofus.org/hc/en-us/articles/6088666015636-The-All-of-Us-Data-Browser-Tutorial): preview aggregate counts and distributions across domains  
   - [Data Dictionaries](https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries) & [Codebooks](https://support.researchallofus.org/hc/en-us/articles/360051991531--All-of-Us-Survey-Codebooks):  
     - The CDR Data Dictionaries offer a complete, versioned listing of all metadata for every table and field in the All of Us CDR
@@ -164,34 +164,37 @@ A dataset in All of Us is a structured table of participant-level records built 
 | **RA_control_no_common**   |  Control   |RA_control_no_common | Demographics, RA_survey    |
 > See [00_AoU_generated_code](data_preparation/00_AoU_generated_code.ipynb) for AoU auto-generated notebook export code
 
-#### 4.(optional) Genomic Data
+#### 4.(optional) Genomic Data Extraction
 
-- **Prerequisite:**
-  * **Use only for cohorts < 5000 participants.** 
+- **Genomic Extraction tool**
 
-- **Extraction Steps**
-  1.  **Dataset Builder**:
-      * Select your cohort.
-      * Check prepackaged concept sets for WGS data.
-      * Choose `VCF files`.
-  <img src="Fig/genomic.png" width="800" height="800" />
+  All of Us offers intuitive, point-and-click tools to extract variant data from the srWGS genomics dataset and export it as VCF call-set files for analysis in a Jupyter Notebook.
+  - **Prerequisite:**
+    * **Use only for cohorts < 5000 participants.** 
   
-  2.  Click **CREATE DATASET**, name it, and save.
-  3.  Click **ANALYZE**, then **EXTRACT & CONTINUE**.
-> See [using the Genomic Extraction tool](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for more instructions
-
-- **After Extraction**
-  * You will be notified when the background job is complete.
-  * Export the dataset to a **Python** Jupyter Notebook to access the analysis tools.
-
-- **Sample Extraction Code**:
-  - [02_RA_case_genomics_extraction.ipynb](data_preparation/02_RA_case_genomics_extraction.ipynb)
-
-- **For large Cohort( > 5000)**:
-  - In the case study, the RA_control_no_common dataset is divided into **four subsets** to satisfy the prerequiste of cohort size.
-  - Extraction code:
-    - [03_RA_control_genomics_extraction.ipynb](data_preparation/03_RA_control_genomics_extraction.ipynb)
-    - **Alternatively**, you can access genomic data directly in jupyter notebook, see [How to Work with All of Us Genomic Data (Hail - Plink)(v8)](https://workbench.researchallofus.org/workspaces/aou-rw-a5b0235e/howtoworkwithallofusgenomicdatahailplinkv8/data) and [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for instrctions
+  - **Extraction Steps**
+    1.  **Dataset Builder**:
+        * Select your cohort.
+        * Check prepackaged concept sets for WGS data.
+        * Choose `VCF files`.
+    <img src="Fig/genomic.png" width="800" height="800" />
+    
+    2.  Click **CREATE DATASET**, name it, and save.
+    3.  Click **ANALYZE**, then **EXTRACT & CONTINUE**.
+  > See [using the Genomic Extraction tool](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for more instructions
+  
+  - **After Extraction**
+    * You will be notified when the background job is complete.
+    * Export the dataset to a **Python** Jupyter Notebook to access the analysis tools.
+  
+  - **Sample Extraction Code**:
+    - [02_RA_case_genomics_extraction.ipynb](data_preparation/02_RA_case_genomics_extraction.ipynb)
+  
+  - **For large Cohort( > 5000)**:
+    - In the case study, the RA_control_no_common dataset is divided into **four subsets** to satisfy the prerequiste of cohort size.
+    - Extraction code:
+      - [03_RA_control_genomics_extraction.ipynb](data_preparation/03_RA_control_genomics_extraction.ipynb)
+- **Alternatively**, you can access genomic data directly in jupyter notebook, see [How to Work with All of Us Genomic Data (Hail - Plink)(v8)](https://workbench.researchallofus.org/workspaces/aou-rw-a5b0235e/howtoworkwithallofusgenomicdatahailplinkv8/data) and [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for instrctions
 ---
 
 ### Step 5: Data Analysis (Standard vs. Genomics Environment)
