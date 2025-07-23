@@ -195,9 +195,9 @@ A dataset in All of Us is a structured table of participant-level records built 
     - Extraction code:
       - [03_RA_control_genomics_extraction.ipynb](data_preparation/03_RA_control_genomics_extraction.ipynb)
 - **Alternatively**, you can access genomic data directly in a notebook
-  - **Sample Code** for preparing genomic data used for RA case study:  
+  - **Sample Code** for preparing genomic data used for RA case study: [RA_gene_extraction.py](Code/RA_gene_extraction.py)
 
-see [How to Work with All of Us Genomic Data (Hail - Plink)(v8)](https://workbench.researchallofus.org/workspaces/aou-rw-a5b0235e/howtoworkwithallofusgenomicdatahailplinkv8/data) and [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for instrctions
+> see [How to Work with All of Us Genomic Data (Hail - Plink)(v8)](https://workbench.researchallofus.org/workspaces/aou-rw-a5b0235e/howtoworkwithallofusgenomicdatahailplinkv8/data) and [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for more instructions
 ---
 
 ### Step 5: Data Analysis (Standard vs. Genomics Environment)
@@ -245,9 +245,9 @@ All of Us Researcher Workbench offers multiple storage layers. Choose the right 
 
 | Storage Option       | Location                                               | Persistence                            | Shared?                                 | [Access Methods](https://support.researchallofus.org/hc/en-us/articles/22465609082260-Accessing-Files-in-the-Workspace-Bucket-or-Persistent-Disk)                                             | Notes                                                                                                               |
 |----------------------|--------------------------------------------------------|----------------------------------------|-----------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| **Workspace Bucket** | Google Cloud Storage bucket attached to your workspace | Permanent: lives until workspace is deleted| Yes: auto-shared with collaborators | - Jupyter/RStudio file browser<br>- `gsutil ls $WORKSPACE_BUCKET`   | Ideal for long-term artifacts (scripts, summary tables, figures).     |
-| **Persistent Disk**  | VM’s attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - VM home directory (e.g., `/home/jupyter`)<br>- Python `.to_csv()`, `.to_pickle()` | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
-| **Standard Disk**    | Ephemeral disk in Dataproc cluster environments        | Temporary: lives only with cluster       | No: isolated to that cluster          | - Dataproc notebook terminal<br>- HDFS or local shell commands              | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
+| **Workspace Bucket** | Google Cloud Storage bucket attached to your **workspace** | Permanent: lives until workspace is deleted| Yes: auto-shared with collaborators | - Using "Snippets" in Jupyter Notebook <br>- View bucket files via the Google Storage Interface <br>- Using command-line tools  | Ideal for long-term artifacts (scripts, summary tables, figures).     |
+| **Persistent Disk**  | **VM’s** attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - Using command-line tools <br>- Jupyter Menu  | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
+| **Standard Disk**    | Ephemeral disk in **Dataproc cluster** environments        | Temporary: lives only with cluster       | No          |               | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
 > **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
 
 #### Downloading Files to Your Local Machine
