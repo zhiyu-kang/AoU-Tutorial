@@ -251,12 +251,10 @@ All of Us Researcher Workbench offers multiple storage layers. Choose the right 
 > **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
 
 #### Downloading Files to Your Local Machine
-Once your file lives on PD or has been copied to the workspace bucket:
-1. In Jupyter: Click Files → Open, select the file, then Download
-2. In RStudio/SAS:
-   - Use the Files pane’s download icon, or
-   - Run *gsutil cp* from the terminal
-
+- Instruction and Policy:
+  - [How do I download files?](https://support.researchallofus.org/hc/en-us/articles/4402287034900-How-do-I-download-files)
+  - [How to comply with the All of Us Data and Statistics Dissemination Policy](https://support.researchallofus.org/hc/en-us/articles/360043016291-How-to-comply-with-the-All-of-Us-Data-and-Statistics-Dissemination-Policy)
+  - [Downloading and Disseminating Genomic Data](https://support.researchallofus.org/hc/en-us/articles/8952792258580-Downloading-and-Disseminating-Genomic-Data)
  
 
 
