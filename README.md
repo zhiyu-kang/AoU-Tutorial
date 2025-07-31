@@ -165,7 +165,7 @@ A dataset in All of Us is a structured table of participant-level records built 
 
 #### 4. Genomic Data Extraction
 
-* **Genomic Extraction tool**
+* ***Genomic Extraction tool*:**
   For smaller cohorts (**< 5000 participants**) All of Us offers intuitive, point-and-click tools to extract variant data from the srWGS genomics dataset and export it as VCF call-set files for analysis in a Jupyter Notebook.
   
   - **Extraction Steps**
@@ -191,8 +191,8 @@ A dataset in All of Us is a structured table of participant-level records built 
     - Extraction code:
       - [03_RA_control_genomics_extraction.ipynb](data_preparation/03_RA_control_genomics_extraction.ipynb)
 
-* **Direct Notebook Access**
-   All of Us’ Researcher Workbench predefines a comprehensive registry of genomic and phenotypic assets, exposing them via environment variables so you can reference data directly in notebooks or scripts without manual downloads or UI workflows
+* ***Direct Notebook Access*:**
+   All of Us’ Researcher Workbench predefines a comprehensive registry of genomic and phenotypic assets, exposing them via environment variables so you can reference data **directly** in notebooks or scripts without manual downloads or UI workflows. This approach is generally **preferred** over the genomic extraction tool because it’s usually faster and cheaper.
   - **Genomics CDR**
     - **Short-read WGS (srWGS):**
       - **Full joint callset** in Hail VariantDataset (VDS) format for all SNPs/Indels
