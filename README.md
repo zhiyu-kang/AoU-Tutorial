@@ -52,7 +52,6 @@ A tutorial for using All of Us platform for biomedical research.
 |----------------------|---------------------------------------------------------------------------|------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **EHR**              | conditions, drug exposures, labs and measurements, and procedures         | Domine(e.g. Conditions) → Source Vocabulary (e.g. ICD-9,ICD-10) → OMOP Standard Vocabulary (e.g. SNOMED) | [Introduction to All of Us Electronic Health Record (EHR) Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/30125602539284-Introduction-to-All-of-Us-Electronic-Health-Record-EHR-Collection-and-Data-Transformation-Methods)  |
 | **Surveys**    | Self-reported demographics, lifestyle, social determinants, COVID-19      | Survey questions and answers → PPI (All of Us) →  OMOP Standard Vocabulary (SNOMED, LOINC, PPI)      | [Introduction to All of Us Survey Collection and Data Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/6085114880148-Introduction-to-All-of-Us-Survey-Collection-and-Data-Transformation-Methods))   |
-| **Physical Measures**| Blood pressure, heart rate, height, weight, waist circumference           | Program physical measurements → PPI (All of Us) →  OMOP Standard Vocabulary (SNOMED, LOINC, PPI)  | [Introduction to All of Us Physical Measurement Data Collection and Transformation Methods](https://support.researchallofus.org/hc/en-us/articles/29888188023060-Introduction-to-All-of-Us-Physical-Measurement-Data-Collection-and-Transformation-Methods) |
 | **Genomics**         | SNV/Indel calls, WGS reads, genotyping arrays                            |  Custom Genomics CDR tables (not in standard OMOP): VCF/MT/BGEN/PLINK files stored under Controlled Tier → see *How the All of Us genomic data are organized*                                             | [How the All of Us genomic data are organized](https://support.researchallofus.org/hc/en-us/articles/29475228181908-How-the-All-of-Us-Genomic-data-are-organized)|
 | **Wearables**        | Activity metrics, sleep patterns, out-of-clinic heart rate               |  Custom Wearables CDR tables (not in standard OMOP): 7 specific tables (according to steps_intraday, heart_rate_minute_level, heart_rate_summary, activity_summary, sleep_level, sleep_daily_summary, device).                                              | [Resources for Using Fitbit Data](https://support.researchallofus.org/hc/en-us/articles/20281023493908-Resources-for-Using-Fitbit-Data)   |
 - For more details:
@@ -164,13 +163,10 @@ A dataset in All of Us is a structured table of participant-level records built 
 | **RA_control_no_common**   |  Control   |RA_control_no_common | Demographics, RA_survey    |
 > See [00_AoU_generated_code](data_preparation/00_AoU_generated_code.ipynb) for AoU auto-generated notebook export code
 
-#### 4.(optional) Genomic Data Extraction
+#### 4.Genomic Data Extraction
 
-- **Genomic Extraction tool**
-
-  All of Us offers intuitive, point-and-click tools to extract variant data from the srWGS genomics dataset and export it as VCF call-set files for analysis in a Jupyter Notebook.
-  - **Prerequisite:**
-    * **Use only for cohorts < 5000 participants.** 
+1. **Genomic Extraction tool**
+  For smaller cohorts (**< 5000 participants**) All of Us offers intuitive, point-and-click tools to extract variant data from the srWGS genomics dataset and export it as VCF call-set files for analysis in a Jupyter Notebook.
   
   - **Extraction Steps**
     1.  **Dataset Builder**:
@@ -190,14 +186,27 @@ A dataset in All of Us is a structured table of participant-level records built 
   - **Sample Extraction Code**:
     - [02_RA_case_genomics_extraction.ipynb](data_preparation/02_RA_case_genomics_extraction.ipynb)
   
-  - **For large Cohort( > 5000)**:
-    - In the case study, the RA_control_no_common dataset is divided into **four subsets** to satisfy the prerequiste of cohort size.
+  - **Example:**:
+    - In the case study, the RA_control_no_common dataset is divided into **four subsets** to reduce cohort size.
     - Extraction code:
       - [03_RA_control_genomics_extraction.ipynb](data_preparation/03_RA_control_genomics_extraction.ipynb)
-- **Alternatively**, you can access genomic data directly in a notebook
-  - **Sample Code** for preparing genomic data used for RA case study: [RA_gene_extraction.py](Code/RA_gene_extraction.py)
 
-> see [How to Work with All of Us Genomic Data (Hail - Plink)(v8)](https://workbench.researchallofus.org/workspaces/aou-rw-a5b0235e/howtoworkwithallofusgenomicdatahailplinkv8/data) and [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool) for more instructions
+2. **Direct Notebook Access**
+   All of Us’ Researcher Workbench predefines a comprehensive registry of genomic and phenotypic assets, exposing them via environment variables so you can reference data directly in notebooks or scripts without manual downloads or UI workflows
+  - **Genomics CDR**
+    - **Short-read WGS (srWGS):**
+      - **Full joint callset** in Hail VariantDataset (VDS) format for all SNPs/Indels
+      - [**Reduced (“smaller”) callsets**](https://support.researchallofus.org/hc/en-us/articles/14929793660948-Smaller-Callsets-for-Analyzing-Short-Read-WGS-SNP-Indel-Data-with-Hail-MT-VCF-and-PLINK)—ACAF threshold, Exome, and ClinVar subsets—delivered in VCF, Hail MatrixTable (multiallelic & split), BGEN, PGEN, and PLINK bed formats to streamline downstream analysis
+      - **CRAM Files**
+      - **Auxiliary Files**
+      - **Structural Variants (SVs)**
+    - **Long-read WGS (lrWGS):** Manifests and joint-call Hail MTs for multiple platforms (ONT, Revio, Sequel2e) and references (GRCh38, T2Tv2)
+    - **Array Data**: Single-sample VCF manifests, as well as Hail MT, PLINK BED, and IDAT files
+  > For a full registry, see the [Controlled CDR Directory](https://support.researchallofus.org/hc/en-us/articles/29475233432212-Controlled-CDR-Directory)
+
+  - **Sample Notebook & Scripts**
+    - **Python script** for RA gene extraction: [RA_gene_extraction.py](Code/RA_gene_extraction.py)
+    - **Notebook** illustrating Hail workflow: [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool)
 ---
 
 ### Step 5: Data Analysis (Standard vs. Genomics Environment)
