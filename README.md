@@ -3,18 +3,13 @@ A tutorial for using All of Us platform for biomedical research.
 
 ## Overview
 
-1. **Workspace Setup**
+1. **Module 1: design and planning**
 
-2. **Cohort Identification**
+2. **Module 2: cohort identification**
 
-3. **Concept Identification**
+3. **Module 3: Multimodal Predictor Assembly**
 
-4. **Dataset creation**
-
-5. **Data analysis (genomics environment vs standard environment)**
-
-6. **Result storage and export**
-
+4. **Module 4: Integrated Risk Prediction**
 
 ## Workflow
 
