@@ -158,8 +158,8 @@ PheCodes group diagnosis codes for phenotyping, but All of Us uses OMOP concept 
 **PheCode → ICD-9/ICD-10 → OMOP Concept ID (SNOMED for EHR)**
 For example, PheCode 714.1 ("rheumatoid arthritis") maps to ICD-9 code 714 and ICD-10 codes M05/M06, which then map to 410 OMOP concept IDs with corresponding SNOMED codes.
 #### Key Resources:
-[Phecode Map](https://phewascatalog.org/phewas/#phe12): PheCode to ICD mappings
-[ATHENA](https://athena.ohdsi.org/): Search OMOP concept IDs by ICD codes (This is also provided in Workbench)
+- [Phecode Map](https://phewascatalog.org/phewas/#phe12): PheCode to ICD mappings
+- [ATHENA](https://athena.ohdsi.org/): Search OMOP concept IDs by ICD codes (This is also provided in Workbench)
 #### Example workflow:
 - Download the CSV file containing ICDs mapped from your identified PheCode
 - Run the mapping notebook: [Mapping ICD to SNOMED](extra/ICD_to_SNOMED.ipynb)
