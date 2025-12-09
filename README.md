@@ -55,8 +55,8 @@ A tutorial for using All of Us platform for biomedical research.
     - The CDR Data Dictionaries offer a complete, versioned listing of all metadata for every table and field in the All of Us CDR
     - The Survey Codebooks compile all fielded survey instruments (Baseline, Follow-Up, PPI) into a tabbed document. Each tab corresponds to one survey, listing every question, response code, value labels, and tier-specific privacy rules
 
----
 
+---
 ### Storage Options
 All of Us Researcher Workbench offers multiple storage layers. Choose the right one for your use case:
 
@@ -153,6 +153,19 @@ Once created, your concept sets appear as reusable assets:
 <img src="Fig/RA_condition.png" width="800" height="800" />
 
 ---
+### Mapping Phecode to OMOP concept ids
+PheCodes group diagnosis codes for phenotyping, but All of Us uses OMOP concept IDs. The mapping follows this hierarchy:
+**PheCode → ICD-9/ICD-10 → OMOP Concept ID (SNOMED for EHR)**
+For example, PheCode 714.1 ("rheumatoid arthritis") maps to ICD-9 code 714 and ICD-10 codes M05/M06, which then map to 410 OMOP concept IDs with corresponding SNOMED codes.
+#### Key Resources:
+[Phecode Map](https://phewascatalog.org/phewas/#phe12): PheCode to ICD mappings
+[ATHENA](https://athena.ohdsi.org/): Search OMOP concept IDs by ICD codes (This is also provided in Workbench)
+#### Example workflow:
+- Download the CSV file containing ICDs mapped from your identified PheCode
+- Run the mapping notebook: [Mapping ICD to SNOMED](extra/ICD_to_SNOMED.ipynb)
+- This will output csv files, including mapped OMOP lists
+- To use these code, you can use the concept quick add function in cohort bulider by copy and paste the list.
+---
 
 ## Module 3: Multimodal Predictor Assembly
 
@@ -170,14 +183,12 @@ A dataset in All of Us is a structured table of participant-level records built 
 6. Click **CREATE DATASET** button at the bottom, and enter a **Name** and **Description** for your dataset
 > See [Building a Dataset with the Dataset Builder](https://support.researchallofus.org/hc/en-us/articles/4556645124244-Building-a-Dataset-with-the-Dataset-Builder) for more detailed instructions
 
-> If you’re comfortable with SQL, you can bypass the visual builders and write your own queries directly in a notebook, though the Dataset Builder is recommended for most users (e.g. [Retrieve EHR Record](Code/Retrieve_ehr.py), [Retrieve Survey Record](Code/Retrieve_survey.py))
-
 #### 3. Example: RA Case-Control
 | Dataset Name               | Group      | Cohort              | Concept Sets  |
 |----------------------------|-----------:|--------------------:|--------------:|
 | **RA_survey_condition**    |  Case      |RA_case_by_survey    | Demographics, RA_condition, RA_survey |
 | **RA_control_no_common**   |  Control   |RA_control_no_common | Demographics, RA_survey    |
-> See [00_AoU_generated_code](data_preparation/00_AoU_generated_code.ipynb) for AoU auto-generated notebook export code
+> See [AoU_generated_code](extra/1_RA_data_extraction.ipynb) for AoU auto-generated notebook export code
 
 #### 4. Genomic Data Extraction
 
@@ -198,14 +209,6 @@ A dataset in All of Us is a structured table of participant-level records built 
   - **After Extraction**
     * You will be notified when the background job is complete.
     * Export the dataset to a **Python** Jupyter Notebook to access the analysis tools.
-  
-  - **Sample Extraction Code**:
-    - [02_RA_case_genomics_extraction.ipynb](data_preparation/02_RA_case_genomics_extraction.ipynb)
-  
-  - **Example:**:
-    - In the case study, the RA_control_no_common dataset is divided into **four subsets** to reduce cohort size.
-    - Extraction code:
-      - [03_RA_control_genomics_extraction.ipynb](data_preparation/03_RA_control_genomics_extraction.ipynb)
 
 * ***Direct Notebook Access*:**
    All of Us’ Researcher Workbench predefines a comprehensive registry of genomic and phenotypic assets, exposing them via environment variables so you can reference data **directly** in notebooks or scripts without manual downloads or UI workflows. This approach is generally **preferred** over the genomic extraction tool because it’s usually faster and cheaper.
