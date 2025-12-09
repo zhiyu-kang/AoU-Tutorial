@@ -3,15 +3,15 @@ A tutorial for using All of Us platform for biomedical research.
 
 ## Overview
 
-1. **Module 1: design and planning**
+1. **Module 1: Design and Planning**
 
-2. **Module 2: cohort identification**
+2. **Module 2: Cohort Identification**
 
 3. **Module 3: Multimodal Predictor Assembly**
 
 4. **Module 4: Integrated Risk Prediction**
 
-## Module 1: design and planning
+## Module 1: Design and Planning
 
 ### Workspace Setup
 
@@ -57,6 +57,24 @@ A tutorial for using All of Us platform for biomedical research.
 
 ---
 
+### Storage Options
+All of Us Researcher Workbench offers multiple storage layers. Choose the right one for your use case:
+
+| Storage Option       | Location                                               | Persistence                            | Shared?                                 | [Access Methods](https://support.researchallofus.org/hc/en-us/articles/22465609082260-Accessing-Files-in-the-Workspace-Bucket-or-Persistent-Disk)                                             | Notes                                                                                                               |
+|----------------------|--------------------------------------------------------|----------------------------------------|-----------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| **Workspace Bucket** | Google Cloud Storage bucket attached to your **workspace** | Permanent: lives until workspace is deleted| Yes: auto-shared with collaborators | - Using "Snippets" in Jupyter Notebook <br>- View bucket files via the Google Storage Interface <br>- Using command-line tools  | Ideal for long-term artifacts (scripts, summary tables, figures).     |
+| **Persistent Disk**  | **VM’s** attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - Using command-line tools <br>- Jupyter Menu  | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
+| **Standard Disk**    | Ephemeral disk in **Dataproc cluster** environments        | Temporary: lives only with cluster       | No          |               | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
+> **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
+
+#### Downloading Files to Your Local Machine
+- Instruction and Policy:
+  - [How do I download files?](https://support.researchallofus.org/hc/en-us/articles/4402287034900-How-do-I-download-files)
+  - [How to comply with the All of Us Data and Statistics Dissemination Policy](https://support.researchallofus.org/hc/en-us/articles/360043016291-How-to-comply-with-the-All-of-Us-Data-and-Statistics-Dissemination-Policy)
+  - [Downloading and Disseminating Genomic Data](https://support.researchallofus.org/hc/en-us/articles/8952792258580-Downloading-and-Disseminating-Genomic-Data)
+ 
+
+
 ## Module 2: Cohort Identification
 
 ### Building Cohorts
@@ -93,7 +111,7 @@ A **cohort** is the set of participants you’ll analyze, defined by inclusion a
 
 ---
 
-### Step 3: Concept Identification
+### Concept Identification
 
 #### 1. What Is a Concept Set?
 A **concept** in All of Us is a standardized medical term or code (e.g., SNOMED, ICD-10, LOINC) used to represent clinical events, measurements, or survey items. You group these into **concept sets** to specify exactly which data elements you want to retrieve for your analyses. Concept identification ensures that you’re pulling the correct, standardized items across diverse vocabularies, and lets you reuse and version your definitions for transparency and reproducibility.
@@ -136,7 +154,9 @@ Once created, your concept sets appear as reusable assets:
 
 ---
 
-### Step 4: Dataset Creation
+## Module 3: Multimodal Predictor Assembly
+
+### Dataset Builder
 
 #### 1. What Is a Dataset?
 A dataset in All of Us is a structured table of participant-level records built from one or more concept sets and your predefined cohort. It lets you package exactly the variables you need—across EHR, survey, genomics or wearable domains—and export them for downstream analysis in Jupyter or RStudio.
@@ -205,7 +225,7 @@ A dataset in All of Us is a structured table of participant-level records built 
     - **Notebook** illustrating Hail workflow: [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool)
 ---
 
-### Step 5: Data Analysis (Standard vs. Genomics Environment)
+### Module 4: Integrated Risk Prediction.  
 All of Us provides several cloud environments for data analysis, including Jupyter, R, and SAS. It is recommended to first export data to a **Jupyter Notebook**, where you can prepare and process the data, then store it in a Google Cloud Storage(GCS) for downstream analysis in other cloud environments.
 
 #### 1. Standard vs. Genomics Environments 
@@ -244,22 +264,5 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 > See [Overview of applications in the Researcher Workbench](https://support.researchallofus.org/hc/en-us/articles/21793933965204-Overview-of-applications-in-the-Researcher-Workbench) for more details
 ---
 
-### Step 6: Result storage and export
-#### Storage Options
-All of Us Researcher Workbench offers multiple storage layers. Choose the right one for your use case:
-
-| Storage Option       | Location                                               | Persistence                            | Shared?                                 | [Access Methods](https://support.researchallofus.org/hc/en-us/articles/22465609082260-Accessing-Files-in-the-Workspace-Bucket-or-Persistent-Disk)                                             | Notes                                                                                                               |
-|----------------------|--------------------------------------------------------|----------------------------------------|-----------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| **Workspace Bucket** | Google Cloud Storage bucket attached to your **workspace** | Permanent: lives until workspace is deleted| Yes: auto-shared with collaborators | - Using "Snippets" in Jupyter Notebook <br>- View bucket files via the Google Storage Interface <br>- Using command-line tools  | Ideal for long-term artifacts (scripts, summary tables, figures).     |
-| **Persistent Disk**  | **VM’s** attached persistent disk (PD)                     | Permanent: survives VM stop/delete | No: private to you  | - Using command-line tools <br>- Jupyter Menu  | Use for software installs, config files, large intermediate data; incurs GCP storage costs.       |
-| **Standard Disk**    | Ephemeral disk in **Dataproc cluster** environments        | Temporary: lives only with cluster       | No          |               | Dataproc clusters do **not** support persistent disks; copy outputs to workspace bucket before cluster deletion.    |
-> **Source:** [“Storage Options Explained”](https://support.researchallofus.org/hc/en-us/articles/5139846877844-Storage-Options-Explained), All of Us Support, updated May 14, 2025.
-
-#### Downloading Files to Your Local Machine
-- Instruction and Policy:
-  - [How do I download files?](https://support.researchallofus.org/hc/en-us/articles/4402287034900-How-do-I-download-files)
-  - [How to comply with the All of Us Data and Statistics Dissemination Policy](https://support.researchallofus.org/hc/en-us/articles/360043016291-How-to-comply-with-the-All-of-Us-Data-and-Statistics-Dissemination-Policy)
-  - [Downloading and Disseminating Genomic Data](https://support.researchallofus.org/hc/en-us/articles/8952792258580-Downloading-and-Disseminating-Genomic-Data)
- 
 
 
