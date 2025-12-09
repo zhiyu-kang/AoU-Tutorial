@@ -11,9 +11,9 @@ A tutorial for using All of Us platform for biomedical research.
 
 4. **Module 4: Integrated Risk Prediction**
 
-## Workflow
+## Module 1: design and planning
 
-### Step 1: Workspace Setup
+### Workspace Setup
 
 #### 1. Workspace Fundamentals  
 - **What is a Workspace?**  
@@ -57,8 +57,9 @@ A tutorial for using All of Us platform for biomedical research.
 
 ---
 
-### Step 2: Cohort Identification
+## Module 2: Cohort Identification
 
+### Building Cohorts
 #### 1. What Is a Cohort?  
 A **cohort** is the set of participants you’ll analyze, defined by inclusion and exclusion criteria that reflect your study question.
 
