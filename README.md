@@ -124,9 +124,7 @@ A **concept** in All of Us is a standardized medical term or code (e.g., SNOMED,
 #### 3. Applying Concept Sets in Analyses
 Once created, your concept sets appear as reusable assets:
 - **In Cohort Builder**, reference concept sets directly when defining inclusion or exclusion criteria.
-- **In Notebooks or SQL**, retrieve the `concept_set_id` and join the `concept_set_item` table with the appropriate data table to pull participant-level data.
-> See [Exploring Concepts with OMOP and SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL) for examples
-
+- **In Dataset Builder**, attach concept sets under Select Concept Sets (Rows) to pull the corresponding clinical or survey records into your dataset.
 ---
 ### Mapping Phecode to OMOP concept ids
 PheCodes group diagnosis codes for phenotyping, but All of Us uses OMOP concept IDs. The mapping follows this hierarchy:
@@ -135,6 +133,7 @@ For example, PheCode 714.1 ("rheumatoid arthritis") maps to ICD-9 code 714 and I
 #### Key Resources:
 - [Phecode Map](https://phewascatalog.org/phewas/#phe12): PheCode to ICD mappings
 - [ATHENA](https://athena.ohdsi.org/): Search OMOP concept IDs by ICD codes (This is also provided in Workbench)
+> See [Exploring Concepts with OMOP and SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL) for details
 #### Example workflow:
 - Download the CSV file containing ICDs mapped from your identified PheCode
 - Run the mapping notebook: [Mapping ICD to SNOMED](extra/ICD_to_SNOMED.ipynb)
