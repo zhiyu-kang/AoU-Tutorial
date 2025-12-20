@@ -135,11 +135,16 @@ For example, PheCode 714.1 ("rheumatoid arthritis") maps to ICD-9 code 714 and I
 - [ATHENA](https://athena.ohdsi.org/): Search OMOP concept IDs by ICD codes (This is also provided in Workbench)
 > See [Exploring Concepts with OMOP and SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL) for details
 #### Example workflow:
+1. SQL within Workbench:
 - Download the CSV file containing ICDs mapped from your identified PheCode
 - Run the mapping notebook: [Mapping ICD to SNOMED](extra/ICD_to_SNOMED.ipynb)
 - This will output csv files, including mapped OMOP lists
 - To use these code, you can use the concept quick add function in cohort bulider by copy and paste the list.
 ---
+2. R:
+- Download the mapping dictionary provided by [OHDSI Athena](https://athena.ohdsi.org/).
+- Run the mapping R script:
+- Upload output lists to All of Us for share and reuse.
 
 ## Module 3: Multimodal Predictor Assembly
 
@@ -198,7 +203,7 @@ A dataset in All of Us is a structured table of participant-level records built 
   > For a full registry, see the [Controlled CDR Directory](https://support.researchallofus.org/hc/en-us/articles/29475233432212-Controlled-CDR-Directory)
 
   - **Sample Notebook & Scripts**
-    - **Python script** for RA gene extraction: 
+    - **Python script** for RA gene extraction: [RA_Genomic_Extraction](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/00_RA_Genomic_Extraction.ipynb)
     - **Notebook** illustrating Hail workflow: [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool)
 ---
 
@@ -228,12 +233,14 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 3. (optional)  If you select the GWAS concept, you can find the path to the extracted VCF files by following [guidance](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool)
 
 
-#### 4. Example Analysis Workflows  
-| Environment  | Focus                                  | Sample Notebooks                                               |
-|-------------:|----------------------------------------|----------------------------------------------------------------|
-| **Standard** | Cohort tables, EHR/survey summaries    |            |
-| **Genomics** | Variant QC, PCA, regression on SNPs   |             |
-
+#### 4. Example Analysis Workflow for RA study 
+**Data Preparation:**
+1. Extract genomic data: [00_RA_Genomic_Extraction](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/00_RA_Genomic_Extraction.ipynb)
+2. Obtain target survey and condition concept ids: [Survey_Search](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/extra/Survey_Search.ipynb) & [ICD_to_SNOMED](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/extra/ICD_to_SNOMED.ipynb)
+3. Extract dataset (output parquet files for the next step): [01_Dataset_Extraction.ipynb](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/01_Dataset_Extraction.ipynb)
+4. Builde dataset (Saved dataset as csv file in the bucket): [02_Dataset_Builder.ipynb](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/02_Dataset_Builder.ipynb)
+**Data Analysis**
+5. [R file]
 #### 5. Other Applications
 - RStudio: Full-featured R IDE for statistical modeling and graphics
 - SAS Studio: SAS language interface optimized for large dataset handling and advanced statistical analyses
