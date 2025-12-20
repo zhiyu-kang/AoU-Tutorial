@@ -74,7 +74,7 @@ All of Us Researcher Workbench offers multiple storage layers. Choose the right 
   - [Downloading and Disseminating Genomic Data](https://support.researchallofus.org/hc/en-us/articles/8952792258580-Downloading-and-Disseminating-Genomic-Data)
  
 
-
+---
 ## Module 2: Cohort Identification
 
 ### Building Cohorts
@@ -126,26 +126,27 @@ Once created, your concept sets appear as reusable assets:
 - **In Cohort Builder**, reference concept sets directly when defining inclusion or exclusion criteria.
 - **In Dataset Builder**, attach concept sets under Select Concept Sets (Rows) to pull the corresponding clinical or survey records into your dataset.
 ---
-### Mapping Phecode to OMOP concept ids
-PheCodes group diagnosis codes for phenotyping, but All of Us uses OMOP concept IDs. The mapping follows this hierarchy:
-**PheCode → ICD-9/ICD-10 → OMOP Concept ID (SNOMED for EHR)**
+### Mapping Phecode to OMOP standard concept ids
+PheCodes group diagnosis codes for phenotyping, but All of Us uses OMOP strandard concept IDs. The mapping follows this hierarchy:
+**PheCode → ICD-9/ICD-10 → OMOP standard Concept ID (SNOMED for EHR).**
 For example, PheCode 714.1 ("rheumatoid arthritis") maps to ICD-9 code 714 and ICD-10 codes M05/M06, which then map to 410 OMOP concept IDs with corresponding SNOMED codes.
 #### Key Resources:
-- [Phecode Map](https://phewascatalog.org/phewas/#phe12): PheCode to ICD mappings
-- [ATHENA](https://athena.ohdsi.org/): Search OMOP concept IDs by ICD codes (This is also provided in Workbench)
+- [Phecode Map](https://phewascatalog.org/phewas/#phe12): PheCode to source vocabulary mappings.
+- [ATHENA](https://support.researchallofus.org/hc/en-us/articles/360039285732-Athena-OHDSI-database-for-OMOP-codes): Search OMOP concept IDs by ICD codes.
 > See [Exploring Concepts with OMOP and SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL) for details
 #### Example workflow:
-1. SQL within Workbench:
+**SQL within Workbench:**
 - Download the CSV file containing ICDs mapped from your identified PheCode
 - Run the mapping notebook: [Mapping ICD to SNOMED](extra/ICD_to_SNOMED.ipynb)
 - This will output csv files, including mapped OMOP lists
 - To use these code, you can use the concept quick add function in cohort bulider by copy and paste the list.
----
-2. R:
+
+**Using ATHENA and R:**
 - Download the mapping dictionary provided by [OHDSI Athena](https://athena.ohdsi.org/).
 - Run the mapping R script:
 - Upload output lists to All of Us for share and reuse.
 
+---
 ## Module 3: Multimodal Predictor Assembly
 
 ### Dataset Builder
@@ -232,20 +233,23 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 2. Select the dataset you wish to analyze and click **Analyze** to open the **Export Dataset** dialog. Here, you can choose R, Python, or SAS export options and either send the code directly to a new or existing notebook, or copy it for use in your preferred IDE (*see [Exporting and analyzing your data in Workbench applications](https://support.researchallofus.org/hc/en-us/articles/360039585831-Exporting-and-analyzing-your-data-in-Workbench-applications) for detailed instructions*)
 3. (optional)  If you select the GWAS concept, you can find the path to the extracted VCF files by following [guidance](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool)
 
+#### 4. Other Applications
+- RStudio: Full-featured R IDE for statistical modeling and graphics
+- SAS Studio: SAS language interface optimized for large dataset handling and advanced statistical analyses
+- Cromwell (WDL): Managed WDL workflows via Google Batch API, supporting complex bioinformatics pipelines
+> See [Overview of applications in the Researcher Workbench](https://support.researchallofus.org/hc/en-us/articles/21793933965204-Overview-of-applications-in-the-Researcher-Workbench) for more details
 
-#### 4. Example Analysis Workflow for RA study 
+#### 5. Example Analysis Workflow for RA study 
 **Data Preparation:**
 1. Extract genomic data: [00_RA_Genomic_Extraction](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/00_RA_Genomic_Extraction.ipynb)
 2. Obtain target survey and condition concept ids: [Survey_Search](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/extra/Survey_Search.ipynb) & [ICD_to_SNOMED](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/extra/ICD_to_SNOMED.ipynb)
 3. Extract dataset (output parquet files for the next step): [01_Dataset_Extraction.ipynb](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/01_Dataset_Extraction.ipynb)
 4. Builde dataset (Saved dataset as csv file in the bucket): [02_Dataset_Builder.ipynb](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/02_Dataset_Builder.ipynb)
-**Data Analysis**
+
+**Data Analysis:**
+
 5. [R file]
-#### 5. Other Applications
-- RStudio: Full-featured R IDE for statistical modeling and graphics
-- SAS Studio: SAS language interface optimized for large dataset handling and advanced statistical analyses
-- Cromwell (WDL): Managed WDL workflows via Google Batch API, supporting complex bioinformatics pipelines
-> See [Overview of applications in the Researcher Workbench](https://support.researchallofus.org/hc/en-us/articles/21793933965204-Overview-of-applications-in-the-Researcher-Workbench) for more details
+
 ---
 
 
