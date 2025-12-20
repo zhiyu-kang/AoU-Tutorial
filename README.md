@@ -57,8 +57,7 @@ A tutorial for using All of Us platform for biomedical research.
     - The Survey Codebooks compile all fielded survey instruments (Baseline, Follow-Up, PPI) into a tabbed document. Each tab corresponds to one survey, listing every question, response code, value labels, and tier-specific privacy rules
 
 
----
-### Storage Options
+#### 5. Storage Options
 All of Us Researcher Workbench offers multiple storage layers. Choose the right one for your use case:
 
 | Storage Option       | Location                                               | Persistence                            | Shared?                                 | [Access Methods](https://support.researchallofus.org/hc/en-us/articles/22465609082260-Accessing-Files-in-the-Workspace-Bucket-or-Persistent-Disk)                                             | Notes                                                                                                               |
@@ -98,15 +97,7 @@ A **cohort** is the set of participants you’ll analyze, defined by inclusion a
 6. Click **Save** and give your cohort a clear, versioned name (e.g. `RA_case_by_survey`).
 > See [Selecting Participants Using the Cohort Builder](https://support.researchallofus.org/hc/en-us/articles/360039585591-Selecting-Participants-Using-the-Cohort-Builder) for more detailed instructions
 
-#### 4. Example: RA Case–Control  
-- **RA Cases**: answered “Yes” to the RA follow-up survey question ("*Are you still seeing a doctor or healthcare provider for rheumatoid arthritis (RA)?*").  
-- **RA Controls**: never saw a provider for RA AND no RA-related EHR codes AND no major comorbidities (CVD, diabetes, hypertension).  
-- **Result**: 3,879 cases and 144,419 controls initially; refined by age (25–105 in 10-year bins) to 14,943 controls.
-
-**The following picture shows RA Control Cohort example**.  
-<img src="Fig/Cohort1.png" width="400" height="400" />
-
-#### 5. Advanced Tips  
+#### 4. Advanced Tips  
 - **[Cohort Review](https://support.researchallofus.org/hc/en-us/articles/360039585651-Reviewing-Participants-with-the-Cohort-Review)**: use the review tab to inspect sample records before finalizing. 
 - **[Temporal Filter](https://support.researchallofus.org/hc/en-us/articles/19012423801364-Using-the-Temporal-Feature-within-the-Cohort-Builder)**: add date ranges (e.g. “first RA code in last 5 years”).    
 
@@ -135,23 +126,6 @@ Once created, your concept sets appear as reusable assets:
 - **In Cohort Builder**, reference concept sets directly when defining inclusion or exclusion criteria.
 - **In Notebooks or SQL**, retrieve the `concept_set_id` and join the `concept_set_item` table with the appropriate data table to pull participant-level data.
 > See [Exploring Concepts with OMOP and SQL](https://support.researchallofus.org/hc/en-us/articles/360039585491-Exploring-Concepts-with-OMOP-and-SQL) for examples
-
-#### 4. Example: RA Case–Control
-- **RA_survey**: Survey question related to the diagnosis of RA
-  - About how old were you when you were first told you had rheumatoid arthritis (RA)?
-  - Are you currently prescribed medications and/or receiving treatment for rheumatoid arthritis (RA)?
-  - Are you still seeing a doctor or health care provider for rheumatoid arthritis (RA)?
-  - Including yourself, who in your family has had rheumatoid arthritis (RA)? Select all that apply.
-
-<img src="Fig/RA_survey.png" width="800" height="800" />
-
-- **RA_condition**: RA case identified by condition code (ICD9/ICD10)
-  - Other specified rheumatoid arthritis
-  - Rheumatoid arthritis
-  - Rheumatoid arthritis without rheumatoid factor
-  - Rheumatoid arthritis, unspecified
-
-<img src="Fig/RA_condition.png" width="800" height="800" />
 
 ---
 ### Mapping Phecode to OMOP concept ids
@@ -187,8 +161,8 @@ A dataset in All of Us is a structured table of participant-level records built 
 #### 3. Example: RA Case-Control
 | Dataset Name               | Group      | Cohort              | Concept Sets  |
 |----------------------------|-----------:|--------------------:|--------------:|
-| **RA_survey_condition**    |  Case      |RA_case_by_survey    | Demographics, RA_condition, RA_survey |
-| **RA_control_no_common**   |  Control   |RA_control_no_common | Demographics, RA_survey    |
+| **RA_survey_condition**    |  Case      |RA_case    | Demographics, RA_condition, RA_survey |
+| **RA_control_no_common**   |  Control   |RA_control | Demographics, RA_survey    |
 > See [AoU_generated_code](extra/1_RA_data_extraction.ipynb) for AoU auto-generated notebook export code
 
 #### 4. Genomic Data Extraction
@@ -225,7 +199,7 @@ A dataset in All of Us is a structured table of participant-level records built 
   > For a full registry, see the [Controlled CDR Directory](https://support.researchallofus.org/hc/en-us/articles/29475233432212-Controlled-CDR-Directory)
 
   - **Sample Notebook & Scripts**
-    - **Python script** for RA gene extraction: [RA_gene_extraction.py](Code/RA_gene_extraction.py)
+    - **Python script** for RA gene extraction: 
     - **Notebook** illustrating Hail workflow: [03_Manipulate Hail MatrixTable](https://support.researchallofus.org/hc/en-us/articles/4558187754772-Selecting-Genomic-data-using-the-Genomic-Extraction-tool)
 ---
 
@@ -258,8 +232,8 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 #### 4. Example Analysis Workflows  
 | Environment  | Focus                                  | Sample Notebooks                                               |
 |-------------:|----------------------------------------|----------------------------------------------------------------|
-| **Standard** | Cohort tables, EHR/survey summaries    | [RA_phenotypic](data_preparation/00_AoU_generated_code.ipynb)            |
-| **Genomics** | Variant QC, PCA, regression on SNPs   | [RA_case_genomics](data_preparation/02_RA_case_genomics_extraction.ipynb)            |
+| **Standard** | Cohort tables, EHR/survey summaries    |            |
+| **Genomics** | Variant QC, PCA, regression on SNPs   |             |
 
 #### 5. Other Applications
 - RStudio: Full-featured R IDE for statistical modeling and graphics
