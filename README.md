@@ -242,9 +242,14 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 #### 5. Example Analysis Workflow for RA study 
 **Data Preparation:**
 1. Extract genomic data: [00_RA_Genomic_Extraction](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/00_RA_Genomic_Extraction.ipynb)
+2. Extract dataset (output parquet files for the next step): [01_Dataset_Extraction.ipynb](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/01_Dataset_Extraction.ipynb)
+3. Builde dataset (Saved dataset as csv file in the bucket): [02_Dataset_Builder.ipynb](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/02_Dataset_Builder.ipynb)
+
+**Data Preparation (Phecode mapping)**
+1. Extract genomic data: [00_RA_Genomic_Extraction](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/00_RA_Genomic_Extraction.ipynb)
 2. Obtain target survey and condition concept ids: [Survey_Search](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/extra/Survey_Search.ipynb) & [ICD_to_SNOMED](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/extra/ICD_to_SNOMED.ipynb)
-3. Extract dataset (output parquet files for the next step): [01_Dataset_Extraction.ipynb](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/01_Dataset_Extraction.ipynb)
-4. Builde dataset (Saved dataset as csv file in the bucket): [02_Dataset_Builder.ipynb](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/data_preparation/02_Dataset_Builder.ipynb)
+3. Extract dataset (output parquet files for the next step): [01_Dataset_Extraction(Mapping).ipynb](extra/01_Dataset_Extraction(Mapping).ipynb)
+4. Builde dataset (Saved dataset as csv file in the bucket): [02_Dataset_Builder(Mapping).ipynb](extra/02_Dataset_Builder(Mapping).ipynb)
 
 **Data Analysis:**
 
