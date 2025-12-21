@@ -248,7 +248,7 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 
 **Data Analysis:**
 
-5. [R file]
+5. Downstream analysis in R: [R scripts](data_analysis)
 
 ---
 
