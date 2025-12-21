@@ -143,7 +143,7 @@ For example, PheCode 714.1 ("rheumatoid arthritis") maps to ICD-9 code 714 and I
 
 **Using ATHENA and R:**
 - Download the mapping dictionary provided by [OHDSI Athena](https://athena.ohdsi.org/).
-- Run the mapping R script:
+- Run the mapping R script: [Mapping_ICD_to_SNOMED](https://github.com/zhiyu-kang/AoU-Tutorial/blob/main/extra/ICD_to_SNOMED.R)
 - Upload output lists to All of Us for share and reuse.
 
 ---
