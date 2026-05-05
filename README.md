@@ -261,7 +261,7 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 
 ## Illustration Code Snippets
 
-### Workbench Version 1
+### For Researcher Workbench Version 1
 
 - [`01_ehr_condition_records.py`](illustration_snippets/workbench_v1/01_ehr_condition_records.py)
   - Representative BigQuery extraction of RA cohort EHR condition records.
@@ -275,7 +275,7 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 - [`05_overall_health_survey.py`](illustration_snippets/workbench_v1/05_overall_health_survey.py)
   - Extract responses to one Overall Health survey question: How often do you have problems learning about your medical condition because of difficulty understanding written information? for identified RA participants by the RA concept list.
 
-### Workbench Version 2
+### For Researcher Workbench Version 2
 
 - [`03_cohort_demographics.py`](illustration_snippets/workbench_v2/03_cohort_demographics.py)
   - Cohort demographics query driven by the RA concept list.
