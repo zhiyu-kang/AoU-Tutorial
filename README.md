@@ -280,9 +280,9 @@ All of Us provides several cloud environments for data analysis, including Jupyt
 - [`03_cohort_demographics.py`](illustration_snippets/workbench_v2/03_cohort_demographics.py)
   - Cohort demographics query driven by the RA concept list.
 - [`04_condition_records.py`](illustration_snippets/workbench_v2/04_condition_records.py)
-  - Longitudinal condition-record extraction for identified RA participants by the RA concept list.
+  - Longitudinal condition-record extraction for identified participants by the RA concept list.
 - [`05_overall_health_survey.py`](illustration_snippets/workbench_v2/05_overall_health_survey.py)
-  - Extract responses to one Overall Health survey question: How often do you have problems learning about your medical condition because of difficulty understanding written information? for identified RA participants by the RA concept list.
+  - Extract responses to one Overall Health survey question: How often do you have problems learning about your medical condition because of difficulty understanding written information? for identified participants by the RA concept list.
 
 ---
 
